@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 export const Header = () => {
   return (
     <div>
-      <Navbar collapseOnSelect bg="light" expand="md">
+      <Navbar className="navbar" collapseOnSelect expand="md">
         <Container>
           <Navbar.Brand href="/">eStore</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
