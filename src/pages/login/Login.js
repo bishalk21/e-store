@@ -1,5 +1,15 @@
 import React from "react";
+import { Container } from "react-bootstrap";
+import { Footer } from "../../components/footer/Footer";
+import { Header } from "../../components/header/Header";
 
 export const LoginPage = () => {
-  return <div>LoginPage</div>;
+  return (
+    <div>
+      {" "}
+      <Header />
+      <Container className="page-min">Login page coming soon</Container>
+      <Footer />
+    </div>
+  );
 };
