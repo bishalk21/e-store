@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Header } from "../../components/header/Header";
 import { Button, Container, Form } from "react-bootstrap";
 import { Footer } from "../../components/footer/Footer";
 import { CustomInoutFiedld } from "../../components/customInoutField/CustomInoutFiedld";
 
 export const AdminRegistration = () => {
+  const [form, setForm] = useState({});
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    console.log(form);
+  };
+
   const fields = [
     {
       label: "First Name *",
@@ -65,11 +77,11 @@ export const AdminRegistration = () => {
       <Header />
       <Container className="page-min">
         <div className="form">
-          <Form>
+          <Form onSubmit={handleOnSubmit}>
             <h1>Admin Registration</h1>
             <hr />
             {fields.map((item, i) => (
-              <CustomInoutFiedld key={i} {...item} />
+              <CustomInoutFiedld key={i} {...item} OnChange={handleOnChange} />
             ))}
 
             <Button variant="primary" type="submit">
