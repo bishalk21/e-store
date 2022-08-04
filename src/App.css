@@ -1,3 +1,14 @@
 .page-min {
     min-height: 70vh;
 }
+
+.form {
+    border: 0.5px solid rgba(128, 128, 128, 0.67);
+    padding: 1.5rem;
+    margin-top: 3rem;
+    border-radius: 0.5rem;
+
+    box-shadow: -7px 5px 8px rgba(0, 0, 0, 0.5);
+    margin-left: auto;
+    margin-right: auto;
+}

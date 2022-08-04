@@ -3,11 +3,12 @@ import { Container } from "react-bootstrap";
 
 export const Footer = () => {
   return (
-    <Container className="bg-dark py-5 text-light text-center">
-      &copy: copyright all rights reserved 2022 || Made with{" "}
-      <i className="fas fa-heart"></i> by{" "}
+    <Container className="bg-dark py-4 text-light text-center">
+      &copy; 2022 eStore - All rights reserved || Made with
+      <span className="text-danger"> &hearts; </span>
+      by{" "}
       <a href="" className="text-light">
-        Bishal Karki
+        Bishal Karki{" "}
       </a>
     </Container>
   );
