@@ -15,7 +15,7 @@ export const LoginPage = () => {
   const { user } = useSelector((state) => state.admin);
 
   useEffect(() => {
-    user._id && navigate("/");
+    user._id && navigate("/dashboard");
   }, [user, navigate]); // dependency array
 
   const handleOnChange = (e) => {
@@ -28,7 +28,7 @@ export const LoginPage = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
+    // console.log(form);
     dispatch(loginAdminUserAction(form));
   };
   return (
@@ -37,7 +37,7 @@ export const LoginPage = () => {
       <Header />
       <Container className="page-min">
         <div className="form">
-          <h3 className="text-center">Welcome Back!</h3>
+          <h3 className="text-center"> Welcome Back! </h3>{" "}
           <Form onSubmit={handleOnSubmit}>
             {" "}
             {}{" "}
@@ -61,7 +61,7 @@ export const LoginPage = () => {
               Submit{" "}
             </Button>{" "}
           </Form>{" "}
-        </div>
+        </div>{" "}
       </Container>{" "}
       <Footer />
     </div>

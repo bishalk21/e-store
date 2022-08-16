@@ -15,11 +15,12 @@ function App() {
         <Routes>
           <Route path="/dashboard" element={<Dahboard />} />{" "}
           <Route path="/" element={<LoginPage />} />{" "}
+          <Route path="/login" element={<LoginPage />} />{" "}
           <Route path="/register" element={<AdminRegistration />} />{" "}
           <Route path="/admin/verify-email" element={<EmailVerification />} />{" "}
         </Routes>{" "}
+        <ToastContainer />{" "}
       </BrowserRouter>{" "}
-      <ToastContainer />{" "}
     </div>
   );
 }

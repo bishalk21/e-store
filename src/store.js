@@ -4,7 +4,7 @@ import userReducer from "./pages/login/userSlice";
 
 const store = configureStore({
   reducer: {
-    user: userReducer,
+    admin: userReducer,
   },
 });
 export default store;

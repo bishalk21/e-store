@@ -1,10 +1,13 @@
 import { toast } from "react-toastify";
-import { loginAdminUser } from "../../helper/axiosHelper.js";
-import { setUser } from "./userSlice.js";
-export const loginAdminUserAction = (data) => async (dispatch) => {
-  const resultPromise = await loginAdminUser(data);
+import { loginAdminUser } from "../../helper/axiosHelper";
+import { setUser } from "./userSlice";
 
-  toast.success(resultPromise, { pending: "please wait..." });
+export const loginAdminUserAction = (data) => async (dispatch) => {
+  const resultPromise = loginAdminUser(data);
+
+  toast.promise(resultPromise, {
+    pending: "please wait...",
+  });
 
   const { status, message, user } = await resultPromise;
 

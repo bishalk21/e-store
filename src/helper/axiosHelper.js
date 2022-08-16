@@ -26,7 +26,7 @@ export const apiProcessor = async ({
 export const postNewAdminUser = (data) => {
 
     const option = {
-        method: 'post',
+        method: "post",
         url: adminUserEP,
         data,
     }
@@ -40,8 +40,8 @@ export const postNewAdminUser = (data) => {
 export const verifyNewAdminUser = (data) => {
 
     const option = {
-        method: 'patch',
-        url: adminUserEP + '/verify-email',
+        method: "patch",
+        url: adminUserEP + "/verify-email",
         data,
     }
     return apiProcessor(option);
@@ -50,8 +50,8 @@ export const verifyNewAdminUser = (data) => {
 export const loginAdminUser = (data) => {
 
     const option = {
-        method: 'post',
-        url: adminUserEP + '/login',
+        method: "post",
+        url: adminUserEP + "/login",
         data,
     }
     return apiProcessor(option);

@@ -15,8 +15,8 @@ import { verifyNewAdminUser } from "../../helper/axiosHelper";
 export const EmailVerification = () => {
   const [queryParams] = useSearchParams();
   const [isPending, setIsPending] = useState(true);
-  console.log(queryParams.get("c"));
-  console.log(queryParams.get("e"));
+  // console.log(queryParams.get("c"));
+  // console.log(queryParams.get("e"));
   const [response, setResponse] = useState({});
 
   useEffect(() => {
@@ -26,12 +26,12 @@ export const EmailVerification = () => {
     };
     (async () => {
       const result = await verifyNewAdminUser(obj);
-      console.log(result);
+      // console.log(result);
       setResponse(result);
       setIsPending(false);
     })();
   }, [queryParams]);
-  console.log(response);
+  // console.log(response)
 
   //call the axios function to call the server
 
@@ -39,18 +39,24 @@ export const EmailVerification = () => {
     <div>
       <Header />
       <Container className="page-min">
+        {" "}
         {isPending && (
-          <Card className="mt-5 p-2 m-auto" style={{ width: "20rem" }}>
+          <Card
+            className="mt-5 p-2 m-auto"
+            style={{
+              width: "20rem",
+            }}
+          >
             <Spinner animation="border" variant="primary" />
-            <h5>Email Verification Process is in progress...</h5>
+            <h5> Email Verification Process is in progress... </h5>{" "}
           </Card>
         )}
-
         {response.message && (
           <Alert variant={response.status === "success" ? "success" : "danger"}>
-            {response.message}
+            {" "}
+            {response.message}{" "}
           </Alert>
-        )}
+        )}{" "}
       </Container>
 
       <Footer />

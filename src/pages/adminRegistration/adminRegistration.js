@@ -26,7 +26,7 @@ export const AdminRegistration = () => {
     }
     const result = await postNewAdminUser(rest);
     setResponse(result);
-    console.log(form);
+    // console.log(form);
   };
 
   const fields = [
@@ -91,23 +91,25 @@ export const AdminRegistration = () => {
       <Container className="page-min">
         <div className="form">
           <Form onSubmit={handleOnSubmit}>
-            <h1> Admin Registration </h1>
+            <h1> Admin Registration </h1>{" "}
             {response.message && (
               <Alert
                 variant={response.status === "success" ? "success" : "danger"}
               >
-                {response.message}
+                {" "}
+                {response.message}{" "}
               </Alert>
-            )}
-            <hr />
+            )}{" "}
+            <hr />{" "}
             {fields.map((item, i) => (
-              <CustomInoutFiedld key={i} {...item} onChange={handleOnChange} /> // key is used to identify each element and...item is used to pass all the properties of the item
-            ))}
+              <CustomInoutFiedld key={i} {...item} onChange={handleOnChange} />
+              // key is used to identify each element and...item is used to pass all the properties of the item
+            ))}{" "}
             <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Form>
-        </div>
+              Submit{" "}
+            </Button>{" "}
+          </Form>{" "}
+        </div>{" "}
       </Container>
 
       <Footer />
