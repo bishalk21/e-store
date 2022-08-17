@@ -1,5 +1,6 @@
 import React from "react";
+import { AdminLayout } from "../components/layout/AdminLayout";
 
 export const Dahboard = () => {
-  return <div> Dashboard </div>;
+  return <AdminLayout> Dashboard </AdminLayout>;
 };

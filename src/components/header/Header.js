@@ -9,7 +9,10 @@ export const Header = () => {
     <div>
       <Navbar className="navbar" collapseOnSelect expand="md">
         <Container>
-          <Navbar.Brand href="/"> eStore </Navbar.Brand>{" "}
+          <div>
+            <i class="fa-solid fa-bars"></i>
+            <Navbar.Brand href="/"> eStore </Navbar.Brand>{" "}
+          </div>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">

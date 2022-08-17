@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CustomInoutFiedld } from "../../components/customInoutField/CustomInoutFiedld";
 import { Footer } from "../../components/footer/Footer";
 import { Header } from "../../components/header/Header";
@@ -37,7 +37,7 @@ export const LoginPage = () => {
       <Header />
       <Container className="page-min">
         <div className="form">
-          <h3 className="text-center"> Welcome Back! </h3>{" "}
+          <h3 className="text-start mb-3"> Welcome Back ! </h3>{" "}
           <Form onSubmit={handleOnSubmit}>
             {" "}
             {}{" "}
@@ -57,6 +57,14 @@ export const LoginPage = () => {
               required
               placeholder="Enter Password"
             />
+            {/* forget password */}{" "}
+            <div className="text-end text">
+              <a href="#"> Forget Password ? </a>{" "}
+            </div>
+            {/* Register */}
+            <div className="text-end text">
+              <Link to="/register"> Register </Link>{" "}
+            </div>
             <Button variant="primary" type="submit">
               Submit{" "}
             </Button>{" "}

@@ -17,3 +17,16 @@
 .navbar {
     background: rgba(0, 0, 139, 0.267);
 }
+
+.text a {
+    text-decoration: none;
+    padding: 2px;
+    height: 10px;
+    width: 10px;
+}
+
+.text a:hover {
+    text-decoration: bold;
+    background: rgba(0, 0, 216, 0.835);
+    color: #fff;
+}

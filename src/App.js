@@ -7,6 +7,7 @@ import { EmailVerification } from "./pages/adminRegistration/EmaiVerification.js
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Dahboard } from "./pages/Dahboard.js";
+import { Product } from "./pages/products/Product";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/dashboard" element={<Dahboard />} />{" "}
+          <Route path="/product" element={<Product />} />{" "}
           <Route path="/" element={<LoginPage />} />{" "}
           <Route path="/login" element={<LoginPage />} />{" "}
           <Route path="/register" element={<AdminRegistration />} />{" "}

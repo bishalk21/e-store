@@ -4,6 +4,7 @@ import { Alert, Button, Container, Form } from "react-bootstrap";
 import { Footer } from "../../components/footer/Footer";
 import { CustomInoutFiedld } from "../../components/customInoutField/CustomInoutFiedld";
 import { postNewAdminUser } from "../../helper/axiosHelper";
+import { Link } from "react-router-dom";
 
 export const AdminRegistration = () => {
   const [form, setForm] = useState({});
@@ -105,6 +106,9 @@ export const AdminRegistration = () => {
               <CustomInoutFiedld key={i} {...item} onChange={handleOnChange} />
               // key is used to identify each element and...item is used to pass all the properties of the item
             ))}{" "}
+            <div className="text-end text">
+              <Link to="/login"> Login </Link>{" "}
+            </div>{" "}
             <Button variant="primary" type="submit">
               Submit{" "}
             </Button>{" "}
