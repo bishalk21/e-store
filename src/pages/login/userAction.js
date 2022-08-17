@@ -18,3 +18,9 @@ export const loginAdminUserAction = (data) => async (dispatch) => {
     dispatch(setUser(user));
   }
 };
+
+export const logoutAdminUserAction = () => async (dispatch) => {
+  // sessionStorage.removeItem("accessJWT");
+  // localStorage.removeItem("refreshJWT");
+  dispatch(setUser({}));
+};

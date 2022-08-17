@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CustomInoutFiedld } from "../../components/customInoutField/CustomInoutFiedld";
 import { Footer } from "../../components/footer/Footer";
 import { Header } from "../../components/header/Header";
@@ -11,11 +11,16 @@ export const LoginPage = () => {
   const dispatch = useDispatch();
   const [form, setForm] = useState({});
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { user } = useSelector((state) => state.admin);
 
+  const origin =
+    (location.state && location.state.from && location.state.from.pathname) ||
+    "/dashboard";
+
   useEffect(() => {
-    user._id && navigate("/dashboard");
+    user._id && navigate(origin);
   }, [user, navigate]); // dependency array
 
   const handleOnChange = (e) => {
