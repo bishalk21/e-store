@@ -28,12 +28,12 @@ export const SideMenu = () => {
               </Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link onClick={handleClose} to="" className="nav-link">
+              <Link onClick={handleClose} to="categories" className="nav-link">
                 <i class="fa-solid fa-list"></i> Users Categories
               </Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link onClick={handleClose} to="" className="nav-link">
+              <Link onClick={handleClose} to="products" className="nav-link">
                 <i class="fa-solid fa-box"></i> Users Products
               </Link>
             </ListGroup.Item>

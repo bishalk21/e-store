@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Dahboard } from "./pages/Dahboard.js";
 import { Product } from "./pages/products/Product";
 import { PrivateRouter } from "./components/private-router/PrivateRouter";
+import { Category } from "./pages/category/Category";
 
 function App() {
   return (
@@ -26,10 +27,18 @@ function App() {
             }
           />{" "}
           <Route
-            path="/product"
+            path="/products"
             element={
               <PrivateRouter>
                 <Product />
+              </PrivateRouter>
+            }
+          />{" "}
+          <Route
+            path="/categories"
+            element={
+              <PrivateRouter>
+                <Category />
               </PrivateRouter>
             }
           />{" "}

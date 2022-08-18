@@ -74,6 +74,12 @@ export const LoginPage = () => {
               Submit{" "}
             </Button>{" "}
           </Form>{" "}
+          {/* Login using Facebook, google */}
+          <div className="text-center text facebook">
+            <a href="#">
+              <i className="fab fa-facebook-f"></i> Facebook{" "}
+            </a>{" "}
+          </div>{" "}
         </div>{" "}
       </Container>{" "}
       <Footer />
