@@ -3,11 +3,11 @@ const rootUrl = process.env.REACT_APP_API_ENDPOINT;
 const adminUserEP = rootUrl + "admin-user";
 const categoryEP = rootUrl + "category";
 
-export const apiProcessor = async ({ method, url, data, isPrivate }) => {
+export const apiProcessor = async ({ method, url, data, isPrivate, token }) => {
   try {
     let headers = isPrivate
       ? {
-          Authorization: sessionStorage.getItem("accessJWT"),
+          Authorization: token || sessionStorage.getItem("accessJWT"),
         }
       : null;
 
@@ -19,6 +19,27 @@ export const apiProcessor = async ({ method, url, data, isPrivate }) => {
     });
     return response.data;
   } catch (error) {
+    let message = error.message;
+
+    if (error.response && error.response.status === 401) {
+      sessionStorage.removeItem("accessJWT");
+      localStorage.removeItem("refreshJWT");
+    }
+
+    if (error.response && error.response.data) {
+      message = error.response.data.message;
+    }
+
+    if (message === "jwt expired") {
+      // call the api to get new access token and send it to the user, store the new access token in the local storage and fetch user data
+      // message = "Your session has expired. Please login again";
+
+      const accessJWT = await getNewAdminAccessToken();
+      if (accessJWT) {
+        return apiProcessor({ method, url, data, isPrivate, token });
+      }
+    }
+
     return {
       status: "success",
       message: error.message,
@@ -54,6 +75,32 @@ export const loginAdminUser = (data) => {
     data,
   };
   return apiProcessor(option);
+};
+
+//fetech all users
+export const fetchAllUsers = (token) => {
+  const option = {
+    method: "get",
+    url: adminUserEP,
+    isPrivate: true,
+    token,
+  };
+  return apiProcessor(option);
+};
+
+// get new admin access token
+export const getNewAdminAccessToken = async () => {
+  const token = localStorage.getItem("refreshJWT");
+  const option = {
+    // method: "post",
+    method: "get",
+    url: adminUserEP + "/accessjwt",
+    isPrivate: true,
+    token,
+  };
+  const { status, message, accessJWT } = await apiProcessor(option);
+  status === "success" && sessionStorage.setItem("accessJWT", accessJWT);
+  return accessJWT;
 };
 
 // fetch all category

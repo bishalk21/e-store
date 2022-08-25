@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CustomInoutFiedld } from "../../components/customInoutField/CustomInoutFiedld";
 import { Footer } from "../../components/footer/Footer";
 import { Header } from "../../components/header/Header";
-import { loginAdminUserAction } from "./userAction";
+import { autoLoginAdminUserAction, loginAdminUserAction } from "./userAction";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
@@ -20,8 +20,8 @@ export const LoginPage = () => {
     "/dashboard";
 
   useEffect(() => {
-    user._id && navigate(origin);
-  }, [user, navigate]); // dependency array
+    user._id ? navigate(origin) : dispatch(autoLoginAdminUserAction());
+  }, [user, navigate, dispatch]); // dependency array
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -42,7 +42,7 @@ export const LoginPage = () => {
       <Header />
       <Container className="page-min">
         <div className="form">
-          <h3 className="text-start mb-3"> Welcome Back ! </h3>{" "}
+          <h3 className="text-start mb-3"> Welcome Back! </h3>{" "}
           <Form onSubmit={handleOnSubmit}>
             {" "}
             {}{" "}
@@ -61,23 +61,23 @@ export const LoginPage = () => {
               name="password"
               required
               placeholder="Enter Password"
-            />
+            />{" "}
             {/* forget password */}{" "}
             <div className="text-end text">
               <a href="#"> Forget Password ? </a>{" "}
-            </div>
-            {/* Register */}
+            </div>{" "}
+            {/* Register */}{" "}
             <div className="text-end text">
               <Link to="/register"> Register </Link>{" "}
-            </div>
+            </div>{" "}
             <Button variant="primary" type="submit">
               Submit{" "}
             </Button>{" "}
           </Form>{" "}
-          {/* Login using Facebook, google */}
+          {/* Login using Facebook, google */}{" "}
           <div className="text-center text facebook">
             <a href="#">
-              <i className="fab fa-facebook-f"></i> Facebook{" "}
+              <i className="fab fa-facebook-f"> </i> Facebook{" "}
             </a>{" "}
           </div>{" "}
         </div>{" "}

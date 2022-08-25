@@ -48,12 +48,12 @@ export const EditCatForm = ({ selectedCategory }) => {
     <>
       <CustomModal title="Edit Category">
         <Form
-          className="border p-3 mb-5 bg-white rounded py-5"
+          className="border p-1 mb-5 bg-white rounded py-5"
           onSubmit={handleOnSubmit}
         >
           <h4 className="mb-4"> Add New Category </h4>{" "}
           <Row className="g-2 shadow-sm ">
-            <Col md="2">
+            <Col lg="2">
               <Form.Check
                 type="switch"
                 checked={form.status === "active"}
@@ -62,7 +62,7 @@ export const EditCatForm = ({ selectedCategory }) => {
                 onChange={handleOnChange}
               />{" "}
             </Col>{" "}
-            <Col md="4">
+            <Col lg="4">
               <FormGroup>
                 <Form.Select name="parentId" onChange={handleOnChange}>
                   <option value=""> Select Parent Category </option>{" "}
@@ -82,7 +82,7 @@ export const EditCatForm = ({ selectedCategory }) => {
                 </Form.Select>{" "}
               </FormGroup>{" "}
             </Col>{" "}
-            <Col md="4">
+            <Col lg="4">
               <FormGroup>
                 <Form.Control
                   type="text"
@@ -94,14 +94,14 @@ export const EditCatForm = ({ selectedCategory }) => {
                 />
               </FormGroup>{" "}
             </Col>{" "}
-            <Col md="2">
+            <Col lg="2">
               <Button variant="primary" type="submit">
-                Update Category
+                Update Category{" "}
               </Button>{" "}
             </Col>{" "}
           </Row>{" "}
-        </Form>
-      </CustomModal>
+        </Form>{" "}
+      </CustomModal>{" "}
     </>
   );
 };

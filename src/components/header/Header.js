@@ -25,7 +25,9 @@ export const Header = () => {
       <Navbar className="navbar" collapseOnSelect expand="md">
         <Container>
           <div>
-            {user._id && <i class="fa-solid fa-bars" onClick={handleShow}></i>}
+            {user && user._id && (
+              <i class="fa-solid fa-bars" onClick={handleShow}></i>
+            )}
             <Navbar.Brand href="/"> eStore </Navbar.Brand>{" "}
           </div>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
