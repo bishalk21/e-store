@@ -10,13 +10,15 @@ import { Dahboard } from "./pages/Dahboard.js";
 import { Product } from "./pages/products/Product";
 import { PrivateRouter } from "./components/private-router/PrivateRouter";
 import { Category } from "./pages/category/Category";
+import { PaymentMethod } from "./pages/payment-method/PaymentMethod";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          {/* privte */}
+          {" "}
+          {/* privte */}{" "}
           <Route
             path="/dashboard"
             element={
@@ -39,6 +41,14 @@ function App() {
             element={
               <PrivateRouter>
                 <Category />
+              </PrivateRouter>
+            }
+          />{" "}
+          <Route
+            path="/payment-method"
+            element={
+              <PrivateRouter>
+                <PaymentMethod />
               </PrivateRouter>
             }
           />{" "}

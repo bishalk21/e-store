@@ -2,14 +2,20 @@ import axios from "axios";
 const rootUrl = process.env.REACT_APP_API_ENDPOINT;
 const adminUserEP = rootUrl + "admin-user";
 const categoryEP = rootUrl + "category";
+const paymentMethodEP = rootUrl + "payment-method";
 
-export const apiProcessor = async ({ method, url, data, isPrivate, token }) => {
+export const apiProcessor = async ({
+  method,
+  url,
+  data,
+  isPrivate,
+  token
+}) => {
   try {
-    let headers = isPrivate
-      ? {
-          Authorization: token || sessionStorage.getItem("accessJWT"),
-        }
-      : null;
+    let headers = isPrivate ? {
+        Authorization: token || sessionStorage.getItem("accessJWT"),
+      } :
+      null;
 
     const response = await axios({
       method,
@@ -36,7 +42,13 @@ export const apiProcessor = async ({ method, url, data, isPrivate, token }) => {
 
       const accessJWT = await getNewAdminAccessToken();
       if (accessJWT) {
-        return apiProcessor({ method, url, data, isPrivate, token });
+        return apiProcessor({
+          method,
+          url,
+          data,
+          isPrivate,
+          token
+        });
       }
     }
 
@@ -98,7 +110,11 @@ export const getNewAdminAccessToken = async () => {
     isPrivate: true,
     token,
   };
-  const { status, message, accessJWT } = await apiProcessor(option);
+  const {
+    status,
+    message,
+    accessJWT
+  } = await apiProcessor(option);
   status === "success" && sessionStorage.setItem("accessJWT", accessJWT);
   return accessJWT;
 };
@@ -148,3 +164,14 @@ export const deleteCategory = (_id) => {
   };
   return apiProcessor(option);
 };
+
+
+//=======================payment method==========================
+export const fetchAllPaymentMethods = () => {
+  const option = {
+    method: "get",
+    url: paymentMethodEP,
+    isPrivate: true,
+  };
+  return apiProcessor(option);
+}
