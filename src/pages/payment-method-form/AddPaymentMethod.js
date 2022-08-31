@@ -29,7 +29,7 @@ export const AddPaymentMethod = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    // console.log(form);
+    console.log(form);
     dispatch(postPaymentMethod(form));
   };
 
