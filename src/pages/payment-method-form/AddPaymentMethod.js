@@ -18,10 +18,13 @@ export const AddPaymentMethod = () => {
     const { name, value, checked } = e.target;
 
     if (name === "status") {
-      value = checked ? "Active" : "Inactive";
+      value = checked ? "active" : "inactive";
     }
 
-    setForm({ ...form, [name]: value });
+    setForm({
+      ...form,
+      [name]: value,
+    });
   };
 
   const handleOnSubmit = (e) => {
@@ -53,11 +56,11 @@ export const AddPaymentMethod = () => {
         <Form.Group>
           <Form.Check
             type="switch"
-            label="Active"
+            label="active"
             name="status"
             onChange={handleOnChange}
-          />
-        </Form.Group>
+          />{" "}
+        </Form.Group>{" "}
         {inputFields.map((item) => (
           <CustomInoutFiedld
             key={item.name}
@@ -65,13 +68,12 @@ export const AddPaymentMethod = () => {
             onChange={handleOnChange}
           />
         ))}
-
         <Form.Group>
           <Button variant="success" type="submit">
-            Add Payment Method
-          </Button>
-        </Form.Group>
-      </Form>
+            Add Payment Method{" "}
+          </Button>{" "}
+        </Form.Group>{" "}
+      </Form>{" "}
     </CustomModal>
   );
 };

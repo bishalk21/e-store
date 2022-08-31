@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { AddPaymentMethod } from "../../pages/payment-method-form/AddPaymentMethod";
 import { EditPaymentM } from "../../pages/payment-method-form/EditPM";
 import {
   deletePaymentMethod,
   getPaymentMethod,
 } from "../../pages/payment-method/PaymentAction";
-import { setModalShow } from "../../pages/system-st/SystemSlice";
+import { setSelectedPaymentMethod } from "../../pages/payment-method/PaymentSlice";
 
-export const PaymentTableF = () => {
+export const PaymentTableF = ({ ShowForm, handleOnAddPM }) => {
   const dispatch = useDispatch();
 
   const { paymentMethod } = useSelector((state) => state.paymentMethod);
@@ -24,13 +25,19 @@ export const PaymentTableF = () => {
     }
   };
 
-  const handleOnEdit = (_id) => {
-    dispatch(setModalShow(_id));
+  const handleOnEdit = (item) => {
+    dispatch(setSelectedPaymentMethod(item));
+    handleOnAddPM("edit");
+  };
+
+  const pmForm = {
+    add: <AddPaymentMethod />,
+    edit: <EditPaymentM />,
   };
 
   return (
     <div>
-      <EditPaymentM />
+      {pmForm[ShowForm]}
       <Table striped bordered hover className="mt-4">
         <thead>
           <tr>
@@ -44,7 +51,7 @@ export const PaymentTableF = () => {
             <tr key={item._id}>
               <td> {i + 1} </td> <td> {item.status} </td> <td> {item.name} </td>{" "}
               <td>
-                <Button variant="info" onClick={() => handleOnEdit(item._id)}>
+                <Button variant="info" onClick={() => handleOnEdit(item)}>
                   {" "}
                   <i className="fa-solid fa-edit"> </i> Edit{" "}
                 </Button>{" "}

@@ -3,19 +3,15 @@ const rootUrl = process.env.REACT_APP_API_ENDPOINT;
 const adminUserEP = rootUrl + "admin-user";
 const categoryEP = rootUrl + "category";
 const paymentMethodEP = rootUrl + "payment-method";
+const productEP = rootUrl + "product";
 
-export const apiProcessor = async ({
-  method,
-  url,
-  data,
-  isPrivate,
-  token
-}) => {
+export const apiProcessor = async ({ method, url, data, isPrivate, token }) => {
   try {
-    let headers = isPrivate ? {
-        Authorization: token || sessionStorage.getItem("accessJWT"),
-      } :
-      null;
+    let headers = isPrivate
+      ? {
+          Authorization: token || sessionStorage.getItem("accessJWT"),
+        }
+      : null;
 
     const response = await axios({
       method,
@@ -47,7 +43,7 @@ export const apiProcessor = async ({
           url,
           data,
           isPrivate,
-          token
+          token,
         });
       }
     }
@@ -110,11 +106,7 @@ export const getNewAdminAccessToken = async () => {
     isPrivate: true,
     token,
   };
-  const {
-    status,
-    message,
-    accessJWT
-  } = await apiProcessor(option);
+  const { status, message, accessJWT } = await apiProcessor(option);
   status === "success" && sessionStorage.setItem("accessJWT", accessJWT);
   return accessJWT;
 };
@@ -165,7 +157,6 @@ export const deleteCategory = (_id) => {
   return apiProcessor(option);
 };
 
-
 //=======================payment method==========================
 export const fetchAllPaymentMethods = () => {
   const option = {
@@ -174,7 +165,7 @@ export const fetchAllPaymentMethods = () => {
     isPrivate: true,
   };
   return apiProcessor(option);
-}
+};
 
 export const postPM = (data) => {
   const option = {
@@ -184,7 +175,7 @@ export const postPM = (data) => {
     data,
   };
   return apiProcessor(option);
-}
+};
 
 // delete payment method
 export const deletePM = (_id) => {
@@ -194,4 +185,24 @@ export const deletePM = (_id) => {
     isPrivate: true,
   };
   return apiProcessor(option);
-}
+};
+
+export const updatePM = (data) => {
+  const option = {
+    method: "put",
+    url: paymentMethodEP,
+    isPrivate: true,
+  };
+  return apiProcessor(option);
+};
+
+//=======================product==========================
+
+export const fetchAllProducts = () => {
+  const option = {
+    method: "get",
+    url: productEP,
+    isPrivate: true,
+  };
+  return apiProcessor(option);
+};

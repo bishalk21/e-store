@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CustomInoutFiedld } from "../../components/customInoutField/CustomInoutFiedld";
 import { CustomModal } from "../../components/modal/modal";
-import { postPaymentMethod } from "../payment-method/PaymentAction";
+import {
+  postPaymentMethod,
+  updatePayment,
+} from "../payment-method/PaymentAction";
 
 const initialState = {
   name: "",
@@ -14,11 +17,19 @@ export const EditPaymentM = () => {
   const dispatch = useDispatch();
   const [form, setForm] = useState(initialState); //form is an object
 
+  const { setSelectedPaymentMethod } = useSelector(
+    (state) => state.paymentMethod
+  );
+
+  useEffect(() => {
+    setForm(setSelectedPaymentMethod);
+  }, [setSelectedPaymentMethod]);
+
   const handleOnChange = (e) => {
     const { name, value, checked } = e.target;
 
     if (name === "status") {
-      value = checked ? "Active" : "Inactive";
+      value = checked ? "active" : "inactive";
     }
 
     setForm({
@@ -29,17 +40,19 @@ export const EditPaymentM = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    // console.log(form);
-    dispatch(postPaymentMethod(form));
+    const { createdAt, updatedAt, __v, ...rest } = form;
+    // console.log(rest);
+    dispatch(updatePayment(rest));
   };
 
   const inputFields = [
     {
       name: "name",
-      label: "Name",
+      label: "name",
       type: "text",
       required: true,
       placeholder: "Enter Category Name",
+      value: form.name,
     },
     {
       name: "description",
@@ -48,6 +61,7 @@ export const EditPaymentM = () => {
       as: "textarea",
       required: true,
       placeholder: "write Information about the payment method",
+      value: form.description,
     },
   ];
   return (
@@ -59,6 +73,7 @@ export const EditPaymentM = () => {
             label="Active"
             name="status"
             onChange={handleOnChange}
+            checked={form.status === "active"}
           />{" "}
         </Form.Group>{" "}
         {inputFields.map((item) => (
@@ -67,7 +82,7 @@ export const EditPaymentM = () => {
             {...item}
             onChange={handleOnChange}
           />
-        ))}
+        ))}{" "}
         <Form.Group>
           <Button variant="success" type="submit">
             Update Payment Method{" "}
