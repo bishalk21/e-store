@@ -20,7 +20,6 @@ export const PaymentTableF = ({ ShowForm, handleOnAddPM }) => {
 
   const handleOnDelete = (_id) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
-      alert("Delete Successfully");
       dispatch(deletePaymentMethod(_id));
     }
   };

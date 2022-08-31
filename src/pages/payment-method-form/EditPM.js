@@ -26,7 +26,7 @@ export const EditPaymentM = () => {
   }, [setSelectedPaymentMethod]);
 
   const handleOnChange = (e) => {
-    const { name, value, checked } = e.target;
+    let { name, value, checked } = e.target;
 
     if (name === "status") {
       value = checked ? "active" : "inactive";
@@ -70,7 +70,7 @@ export const EditPaymentM = () => {
         <Form.Group>
           <Form.Check
             type="switch"
-            label="Active"
+            label="active"
             name="status"
             onChange={handleOnChange}
             checked={form.status === "active"}

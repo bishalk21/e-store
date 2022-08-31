@@ -56,7 +56,7 @@ export const AddPaymentMethod = () => {
         <Form.Group>
           <Form.Check
             type="switch"
-            label="active"
+            label="inactive"
             name="status"
             onChange={handleOnChange}
           />{" "}
