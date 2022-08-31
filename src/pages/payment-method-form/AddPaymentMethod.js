@@ -15,7 +15,7 @@ export const AddPaymentMethod = () => {
   const [form, setForm] = useState(initialState); //form is an object
 
   const handleOnChange = (e) => {
-    const { name, value, checked } = e.target;
+    let { name, value, checked } = e.target;
 
     if (name === "status") {
       value = checked ? "active" : "inactive";
