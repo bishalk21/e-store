@@ -185,3 +185,13 @@ export const postPM = (data) => {
   };
   return apiProcessor(option);
 }
+
+// delete payment method
+export const deletePM = (_id) => {
+  const option = {
+    method: "delete",
+    url: paymentMethodEP + "/" + _id,
+    isPrivate: true,
+  };
+  return apiProcessor(option);
+}

@@ -9,7 +9,6 @@ import { setModalShow } from "../system-st/SystemSlice";
 export const PaymentMethod = () => {
   const dispatch = useDispatch();
   const handleOnAddPM = () => {
-    alert("Add Payment Method");
     dispatch(setModalShow());
   };
   return (
