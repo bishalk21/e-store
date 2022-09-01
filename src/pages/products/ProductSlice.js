@@ -4,7 +4,7 @@ const initialState = {
   selectedProduct: {},
 };
 const productSlice = createSlice({
-  name: "product",
+  name: "product", // name of the slice (reducer)
   initialState,
   reducers: {
     setProducts: (state, { payload = [] }) => {

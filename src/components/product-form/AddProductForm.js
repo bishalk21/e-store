@@ -12,6 +12,7 @@ const initialState = {
   price: 0,
   quantity: 0,
   sku: "",
+
   salesPrice: null,
   salesStartDate: null,
   salesEndDate: null,
@@ -69,6 +70,9 @@ export const AddProductForm = () => {
       type: "text",
       placeholder: "Enter Product Name",
       required: true,
+    },
+    {
+      name: "thumbnail",
     },
     {
       name: "sku",
@@ -130,10 +134,8 @@ export const AddProductForm = () => {
     },
     {
       name: "images",
-      label: "Image",
       type: "file",
       accept: "image/*",
-      placeholder: "Enter Image",
       required: true,
     },
   ];
@@ -153,22 +155,22 @@ export const AddProductForm = () => {
             type="switch"
             checked={form.status === "active"}
             onChange={handleOnChange}
-          />
-        </Form.Group>
-        {/* select category */}
+          />{" "}
+        </Form.Group>{" "}
+        {/* select category */}{" "}
         <Form.Group className="mb-3">
-          <Form.Label>Assign to Category</Form.Label>
+          <Form.Label> Assign to Category </Form.Label>{" "}
           <Form.Select name="catId" onChange={handleOnChange} required>
-            <option value="">Select Parent Category</option>
+            <option value=""> Select Category </option>{" "}
             {categories.length > 0 &&
               categories.map(
                 (item) =>
                   !item.parentId && (
-                    <option value={item._id}>{item.name}</option>
+                    <option value={item._id}> {item.name} </option>
                   )
-              )}
-          </Form.Select>
-        </Form.Group>
+              )}{" "}
+          </Form.Select>{" "}
+        </Form.Group>{" "}
         {inputFields.map((item, i) => (
           <CustomInoutFiedld
             key={i}
@@ -178,9 +180,9 @@ export const AddProductForm = () => {
             }
           />
         ))}{" "}
-        {/* Button */}
+        {/* Button */}{" "}
         <Button variant="primary" type="submit">
-          Submit
+          Submit{" "}
         </Button>{" "}
       </Form>{" "}
     </div>

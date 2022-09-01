@@ -7,7 +7,7 @@ import { getProductAction } from "../../pages/products/ProductAction";
 export const ProductTable = () => {
   const dispatch = useDispatch();
 
-  const { productList } = useSelector((state) => state.products);
+  const { productList } = useSelector((state) => state.product);
 
   useEffect(() => {
     dispatch(getProductAction());
@@ -26,8 +26,15 @@ export const ProductTable = () => {
         {" "}
         {productList.map((item, i) => (
           <tr key={i}>
-            <td> {i + 1} </td> <td> {item.status} </td> <td> {item.name} </td>{" "}
-            <td> {item.qty} </td> <td> {item.price} </td>{" "}
+            <td> {i + 1} </td> <td> {item.status} </td>
+            <td>
+              <img
+                src={"http://localhost:8000/" + item.thumbnail}
+                alt="product"
+                width="50"
+              />
+            </td>
+            <td> {item.name} </td> <td> {item.qty} </td> <td> {item.price} </td>{" "}
             <td> {item.salesPrice} </td>{" "}
             <td>
               {" "}

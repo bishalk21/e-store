@@ -13,8 +13,7 @@ export const apiProcessor = async ({
   token
 }) => {
   try {
-    let headers = isPrivate ?
-      {
+    let headers = isPrivate ? {
         Authorization: token || sessionStorage.getItem("accessJWT"),
       } :
       null;
@@ -208,10 +207,11 @@ export const updatePM = (data) => {
 
 //=======================product==========================
 
-export const fetchAllProducts = () => {
+export const fetchAllProducts = (_id) => {
+  const url = _id ? productEP + "/" + _id : productEP;
   const option = {
     method: "get",
-    url: productEP,
+    url,
     isPrivate: true,
   };
   return apiProcessor(option);
@@ -222,6 +222,17 @@ export const postProduct = (data) => {
   const option = {
     method: "post",
     url: productEP,
+    isPrivate: true,
+    data,
+  };
+  return apiProcessor(option);
+}
+
+//delete product
+export const deleteProduct = (_id, data) => {
+  const option = {
+    method: "delete",
+    url: productEP + "/" + _id,
     isPrivate: true,
     data,
   };
