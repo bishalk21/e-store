@@ -5,13 +5,19 @@ const categoryEP = rootUrl + "category";
 const paymentMethodEP = rootUrl + "payment-method";
 const productEP = rootUrl + "product";
 
-export const apiProcessor = async ({ method, url, data, isPrivate, token }) => {
+export const apiProcessor = async ({
+  method,
+  url,
+  data,
+  isPrivate,
+  token
+}) => {
   try {
-    let headers = isPrivate
-      ? {
-          Authorization: token || sessionStorage.getItem("accessJWT"),
-        }
-      : null;
+    let headers = isPrivate ?
+      {
+        Authorization: token || sessionStorage.getItem("accessJWT"),
+      } :
+      null;
 
     const response = await axios({
       method,
@@ -106,7 +112,11 @@ export const getNewAdminAccessToken = async () => {
     isPrivate: true,
     token,
   };
-  const { status, message, accessJWT } = await apiProcessor(option);
+  const {
+    status,
+    message,
+    accessJWT
+  } = await apiProcessor(option);
   status === "success" && sessionStorage.setItem("accessJWT", accessJWT);
   return accessJWT;
 };
@@ -206,3 +216,14 @@ export const fetchAllProducts = () => {
   };
   return apiProcessor(option);
 };
+
+// post product
+export const postProduct = (data) => {
+  const option = {
+    method: "post",
+    url: productEP,
+    isPrivate: true,
+    data,
+  };
+  return apiProcessor(option);
+}

@@ -56,17 +56,13 @@ export const AddPaymentMethod = () => {
         <Form.Group>
           <Form.Check
             type="switch"
-            label="inactive"
+            label="Status"
             name="status"
             onChange={handleOnChange}
           />{" "}
         </Form.Group>{" "}
-        {inputFields.map((item) => (
-          <CustomInoutFiedld
-            key={item.name}
-            {...item}
-            onChange={handleOnChange}
-          />
+        {inputFields.map((item, i) => (
+          <CustomInoutFiedld key={i} {...item} onChange={handleOnChange} />
         ))}
         <Form.Group>
           <Button variant="success" type="submit">

@@ -50,7 +50,7 @@ export const PaymentTableF = ({ ShowForm, handleOnAddPM }) => {
             <tr key={item._id}>
               <td> {i + 1} </td> <td> {item.status} </td> <td> {item.name} </td>{" "}
               <td>
-                <Button variant="info" onClick={() => handleOnEdit(item)}>
+                <Button variant="warning" onClick={() => handleOnEdit(item)}>
                   {" "}
                   <i className="fa-solid fa-edit"> </i> Edit{" "}
                 </Button>{" "}

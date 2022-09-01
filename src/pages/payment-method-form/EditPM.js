@@ -17,13 +17,11 @@ export const EditPaymentM = () => {
   const dispatch = useDispatch();
   const [form, setForm] = useState(initialState); //form is an object
 
-  const { setSelectedPaymentMethod } = useSelector(
-    (state) => state.paymentMethod
-  );
+  const { setPaymentMethod } = useSelector((state) => state.paymentMethod);
 
   useEffect(() => {
-    setForm(setSelectedPaymentMethod);
-  }, [setSelectedPaymentMethod]);
+    setForm(setPaymentMethod);
+  }, [setPaymentMethod]);
 
   const handleOnChange = (e) => {
     let { name, value, checked } = e.target;
@@ -65,23 +63,19 @@ export const EditPaymentM = () => {
     },
   ];
   return (
-    <CustomModal>
+    <CustomModal title="Edit Payment Method">
       <Form onSubmit={handleOnSubmit}>
         <Form.Group>
           <Form.Check
             type="switch"
-            label="active"
+            label="Status"
             name="status"
             onChange={handleOnChange}
             checked={form.status === "active"}
           />{" "}
         </Form.Group>{" "}
-        {inputFields.map((item) => (
-          <CustomInoutFiedld
-            key={item.name}
-            {...item}
-            onChange={handleOnChange}
-          />
+        {inputFields.map((item, i) => (
+          <CustomInoutFiedld key={i} {...item} onChange={handleOnChange} />
         ))}{" "}
         <Form.Group>
           <Button variant="success" type="submit">
