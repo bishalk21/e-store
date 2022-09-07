@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { CustomInoutFiedld } from "../../components/customInoutField/CustomInoutFiedld";
-import { CustomModal } from "../../components/modal/modal";
 import {
-  postPaymentMethod,
-  updatePayment,
-} from "../payment-method/PaymentAction";
+  postPmsAction,
+  updatePmAction,
+} from "../../pages/payment-method/pmAction";
+import { CustomInputField } from "../customInputField/CustomInputField";
+import { CustomModal } from "../model/Model";
 
 const initialState = {
-  name: "",
   status: "",
+  name: "",
   description: "",
 };
-export const EditPaymentM = () => {
+export const EditPaymentMethod = () => {
   const dispatch = useDispatch();
-  const [form, setForm] = useState(initialState); //form is an object
+  const [form, setForm] = useState(initialState);
 
-  const { setPaymentMethod } = useSelector((state) => state.paymentMethod);
+  const { selectPm } = useSelector((state) => state.paymentMethod);
 
   useEffect(() => {
-    setForm(setPaymentMethod);
-  }, [setPaymentMethod]);
+    setForm(selectPm);
+  }, [selectPm]);
 
   const handleOnChange = (e) => {
-    let { name, value, checked } = e.target;
+    let { checked, name, value } = e.target;
 
     if (name === "status") {
       value = checked ? "active" : "inactive";
@@ -39,17 +39,17 @@ export const EditPaymentM = () => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     const { createdAt, updatedAt, __v, ...rest } = form;
-    // console.log(rest);
-    dispatch(updatePayment(rest));
+
+    dispatch(updatePmAction(rest));
   };
 
-  const inputFields = [
+  const inputeFields = [
     {
       name: "name",
-      label: "name",
+      label: "Name",
       type: "text",
       required: true,
-      placeholder: "Enter Category Name",
+      placeholder: "Enter category name",
       value: form.name,
     },
     {
@@ -58,31 +58,32 @@ export const EditPaymentM = () => {
       type: "text",
       as: "textarea",
       required: true,
-      placeholder: "write Information about the payment method",
+      placeholder: "Write Information about the payment method",
       value: form.description,
     },
   ];
   return (
-    <CustomModal title="Edit Payment Method">
+    <CustomModal title="Edit payment method">
       <Form onSubmit={handleOnSubmit}>
         <Form.Group>
           <Form.Check
             type="switch"
-            label="Status"
             name="status"
+            label="Status"
             onChange={handleOnChange}
             checked={form.status === "active"}
-          />{" "}
-        </Form.Group>{" "}
-        {inputFields.map((item, i) => (
-          <CustomInoutFiedld key={i} {...item} onChange={handleOnChange} />
-        ))}{" "}
+          />
+        </Form.Group>
+        {inputeFields.map((item, i) => (
+          <CustomInputField key={i} {...item} onChange={handleOnChange} />
+        ))}
+
         <Form.Group>
           <Button variant="success" type="submit">
-            Update Payment Method{" "}
-          </Button>{" "}
-        </Form.Group>{" "}
-      </Form>{" "}
+            Update Payment Method
+          </Button>
+        </Form.Group>
+      </Form>
     </CustomModal>
   );
 };

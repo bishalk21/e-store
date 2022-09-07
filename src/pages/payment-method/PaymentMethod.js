@@ -2,29 +2,32 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { AdminLayout } from "../../components/layout/AdminLayout";
-import { PaymentTableF } from "../../components/payment-table/PaymentTableF";
-import { AddPaymentMethod } from "../payment-method-form/AddPaymentMethod";
-import { setModalShow } from "../system-st/SystemSlice";
+import { AddPaymentMethod } from "../../components/payment-method-forms/AddPaymentMethod";
+import { PaymentMethodTable } from "../../components/payment-method-table/PaymentMethodTable";
+import { setModalShow } from "../system-state/systemSlice";
 
-export const PaymentMethod = () => {
+const PaymentMethod = () => {
   const dispatch = useDispatch();
 
-  const [ShowForm, setShowAddForm] = useState(false);
+  const [showForm, setShowForm] = useState("");
 
-  const handleOnAddPM = () => {
+  const handleOnAddPM = (str) => {
     dispatch(setModalShow());
-    setShowAddForm(true);
+    setShowForm(str);
   };
   return (
     <AdminLayout>
-      <h4 className="py-4"> Payment Method </h4> <hr />
-      <AddPaymentMethod />
+      <h4 className="py-4">Paymet Method mgmt.</h4>
+      <hr />
+
       <div className="text-end py-3">
         <Button variant="primary" onClick={() => handleOnAddPM("add")}>
-          <i className="fa-solid fa-plus"> </i> Add New Payment Method{" "}
-        </Button>{" "}
-      </div>{" "}
-      <PaymentTableF ShowForm={ShowForm} handleOnAddPM={handleOnAddPM} />
+          <i className="fa-solid fa-plus"></i> Add New Payment Method
+        </Button>
+      </div>
+      <PaymentMethodTable showForm={showForm} handleOnAddPM={handleOnAddPM} />
     </AdminLayout>
   );
 };
+
+export default PaymentMethod;

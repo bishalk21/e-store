@@ -1,11 +1,11 @@
 import axios from "axios";
 const rootUrl = process.env.REACT_APP_API_ENDPOINT;
-const adminUserEP = rootUrl + "admin-user";
-const categoryEP = rootUrl + "category";
-const paymentMethodEP = rootUrl + "payment-method";
-const productEP = rootUrl + "product";
+const adminUserEP = rootUrl + "/admin-user";
+const categoryEP = rootUrl + "/category";
+const PMEP = rootUrl + "/payment-method";
+const productEP = rootUrl + "/product";
 
-export const apiProcessor = async ({
+const apiProcesser = async ({
   method,
   url,
   data,
@@ -13,8 +13,8 @@ export const apiProcessor = async ({
   token
 }) => {
   try {
-    let headers = isPrivate ? {
-        Authorization: token || sessionStorage.getItem("accessJWT"),
+    const headers = isPrivate ? {
+        Authorization: token || sessionStorage.getItem("accessJWT")
       } :
       null;
 
@@ -24,6 +24,7 @@ export const apiProcessor = async ({
       data,
       headers,
     });
+
     return response.data;
   } catch (error) {
     let message = error.message;
@@ -38,74 +39,94 @@ export const apiProcessor = async ({
     }
 
     if (message === "jwt expired") {
-      // call the api to get new access token and send it to the user, store the new access token in the local storage and fetch user data
-      // message = "Your session has expired. Please login again";
+      // call the api to get new accessJWT and store in the session and recall the api Processer
 
-      const accessJWT = await getNewAdminAccessToken();
+      const accessJWT = await getNewAccessJWT();
       if (accessJWT) {
-        return apiProcessor({
+        return apiProcesser({
           method,
           url,
           data,
           isPrivate,
-          token,
+          token
         });
       }
     }
 
     return {
-      status: "success",
-      message: error.message,
+      status: "error",
+      message,
     };
   }
 };
 
-// post new admin user
-export const postNewAdminUser = (data) => {
+//post new admin user
+export const postUser = (data) => {
   const option = {
     method: "post",
     url: adminUserEP,
     data,
   };
-  return apiProcessor(option);
+  return apiProcesser(option);
 };
 
-// verify new admin user
-
-export const verifyNewAdminUser = (data) => {
+//verify  admin user account
+export const eamilVerifyAdminUser = (data) => {
   const option = {
     method: "patch",
     url: adminUserEP + "/verify-email",
     data,
-    isPrivate: true,
   };
-  return apiProcessor(option);
+  return apiProcesser(option);
 };
+
+//login  admin user
 export const loginAdminUser = (data) => {
   const option = {
     method: "post",
     url: adminUserEP + "/login",
     data,
   };
-  return apiProcessor(option);
+  return apiProcesser(option);
 };
 
-//fetech all users
-export const fetchAllUsers = (token) => {
+//login  admin user
+export const getAdminUser = (token) => {
   const option = {
     method: "get",
     url: adminUserEP,
     isPrivate: true,
     token,
   };
-  return apiProcessor(option);
+  return apiProcesser(option);
 };
 
-// get new admin access token
-export const getNewAdminAccessToken = async () => {
+// user update
+export const updateAdminUser = (data) => {
+  const option = {
+    method: "put",
+    url: adminUserEP,
+    data,
+    isPrivate: true,
+  };
+  return apiProcesser(option);
+}
+
+// update user password
+export const updateAdminUserPassword = (data) => {
+  const option = {
+    method: "patch",
+    url: adminUserEP,
+    data,
+    isPrivate: true,
+  };
+  return apiProcesser(option);
+}
+
+//fetch new accessJWT
+export const getNewAccessJWT = async () => {
   const token = localStorage.getItem("refreshJWT");
   const option = {
-    // method: "post",
     method: "get",
     url: adminUserEP + "/accessjwt",
     isPrivate: true,
@@ -113,38 +134,36 @@ export const getNewAdminAccessToken = async () => {
   };
   const {
     status,
-    message,
     accessJWT
-  } = await apiProcessor(option);
+  } = await apiProcesser(option);
+
   status === "success" && sessionStorage.setItem("accessJWT", accessJWT);
   return accessJWT;
 };
 
-// fetch all category
-
-export const fetchAllCategories = (_id) => {
+// ========== category api calls
+//fetch categories
+export const fetchCategory = (_id) => {
   const option = {
     method: "get",
     url: _id ? categoryEP + "/" + _id : categoryEP,
     isPrivate: true,
   };
-  return apiProcessor(option);
+  return apiProcesser(option);
 };
 
-// post category
-
-export const postAllCategories = (data) => {
+//post new category
+export const postCategory = (data) => {
   const option = {
     method: "post",
     url: categoryEP,
     data,
     isPrivate: true,
   };
-  return apiProcessor(option);
+  return apiProcesser(option);
 };
 
-//update category
-
+//update  category
 export const updateCategory = (data) => {
   const option = {
     method: "put",
@@ -152,72 +171,70 @@ export const updateCategory = (data) => {
     data,
     isPrivate: true,
   };
-  return apiProcessor(option);
+  return apiProcesser(option);
 };
 
-// delete category
-
+//delete  category
 export const deleteCategory = (_id) => {
   const option = {
     method: "delete",
     url: categoryEP + "/" + _id,
     isPrivate: true,
   };
-  return apiProcessor(option);
+  return apiProcesser(option);
 };
 
-//=======================payment method==========================
-export const fetchAllPaymentMethods = () => {
+// =========== payment methods apis
+//fetch payment methods
+export const fetchPM = () => {
   const option = {
     method: "get",
-    url: paymentMethodEP,
+    url: PMEP,
     isPrivate: true,
   };
-  return apiProcessor(option);
+  return apiProcesser(option);
 };
 
 export const postPM = (data) => {
   const option = {
     method: "post",
-    url: paymentMethodEP,
+    url: PMEP,
     isPrivate: true,
     data,
   };
-  return apiProcessor(option);
+  return apiProcesser(option);
 };
 
-// delete payment method
 export const deletePM = (_id) => {
   const option = {
     method: "delete",
-    url: paymentMethodEP + "/" + _id,
+    url: PMEP + "/" + _id,
     isPrivate: true,
   };
-  return apiProcessor(option);
+  return apiProcesser(option);
 };
 
 export const updatePM = (data) => {
   const option = {
     method: "put",
-    url: paymentMethodEP,
+    url: PMEP,
     isPrivate: true,
+    data,
   };
-  return apiProcessor(option);
+  return apiProcesser(option);
 };
 
-//=======================product==========================
-
-export const fetchAllProducts = (_id) => {
+// ============ product apis
+export const fetchProducts = (_id) => {
   const url = _id ? productEP + "/" + _id : productEP;
   const option = {
     method: "get",
     url,
     isPrivate: true,
   };
-  return apiProcessor(option);
+  return apiProcesser(option);
 };
 
-// post product
 export const postProduct = (data) => {
   const option = {
     method: "post",
@@ -225,10 +242,19 @@ export const postProduct = (data) => {
     isPrivate: true,
     data,
   };
-  return apiProcessor(option);
-}
+  return apiProcesser(option);
+};
 
-//delete product
+export const updateProduct = (data) => {
+  const option = {
+    method: "put",
+    url: productEP,
+    isPrivate: true,
+    data,
+  };
+  return apiProcesser(option);
+};
+
 export const deleteProduct = (_id, data) => {
   const option = {
     method: "delete",
@@ -236,5 +262,5 @@ export const deleteProduct = (_id, data) => {
     isPrivate: true,
     data,
   };
-  return apiProcessor(option);
-}
+  return apiProcesser(option);
+};

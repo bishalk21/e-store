@@ -1,61 +1,86 @@
 import { toast } from "react-toastify";
 import {
-  fetchAllUsers,
-  getNewAdminAccessToken,
+  getAdminUser,
+  getNewAccessJWT,
   loginAdminUser,
-} from "../../helper/axiosHelper";
-import { setUser } from "./userSlice";
+  updateAdminUser,
+  updateAdminUserPassword,
+} from "../../helpers/axiosHelper";
+import { setAdminUser } from "./userSlice";
 
-export const loginAdminUserAction = (data) => async (dispatch) => {
+export const loginUserAction = (data) => async (dispatch) => {
   const resultPromise = loginAdminUser(data);
 
   toast.promise(resultPromise, {
-    pending: "please wait...",
+    pending: "please wait..",
   });
 
   const { status, message, user, accessJWT, refreshJWT } = await resultPromise;
 
   toast[status](message);
+
   if (status === "success") {
     sessionStorage.setItem("accessJWT", accessJWT);
     localStorage.setItem("refreshJWT", refreshJWT);
-    dispatch(setUser(user));
+    dispatch(setAdminUser(user));
   }
 };
 
-export const logoutAdminUserAction = () => (dispatch) => {
-  dispatch(setUser({}));
+export const adminLogout = () => (dispatch) => {
+  dispatch(setAdminUser({}));
   sessionStorage.removeItem("accessJWT");
   localStorage.removeItem("refreshJWT");
 };
 
-// fetch user data from database and mount in the redux store
-export const fetchUserDataAction = (token) => async (dispatch) => {
-  const { status, message, user } = await fetchAllUsers(token);
-  status === "success" && user && dispatch(setUser(user));
+//fetch user and mount in the redux store
+export const getAdminUserAction = (token) => async (dispatch) => {
+  const { status, message, user } = await getAdminUser(token);
+  status === "success" && dispatch(setAdminUser(user));
 };
 
-// auto login if refresh token is available
-export const autoLoginAdminUserAction = () => async (dispatch) => {
-  // if access token is available, fetch user data and mount user in redux store
-  //step 2
-  // else
-  // if refresh token is available, request for access token and fetch user data and mount user in redux store
+export const autoLogin = () => async (dispatch) => {
   const accessJWT = sessionStorage.getItem("accessJWT");
-  const refreshJWT = localStorage.getItem("refreshJWT"); // step 2
+  const refreshJWT = localStorage.getItem("refreshJWT");
+  //esle
 
   if (accessJWT) {
-    dispatch(fetchUserDataAction());
+    //if accessJWT exist, fetch user and mont user in our redux store
+    dispatch(getAdminUserAction());
   } else if (refreshJWT) {
-    const token = await getNewAdminAccessToken();
-    token ? dispatch(fetchUserDataAction(token)) : logoutAdminUserAction();
-    // if (token) {
-    //   dispatch(fetchUserDataAction());
-    // } else {
-    //   dispatch(logoutAdminUserAction());
-    // }
-    //step 2
+    // if refreshJWT exist only, fetch new accessJWT and fetch user using the newly fetch accessJWT
+    const token = await getNewAccessJWT();
+    token ? dispatch(getAdminUserAction(token)) : dispatch(adminLogout());
   } else {
-    dispatch(logoutAdminUserAction());
+    dispatch(adminLogout());
   }
+};
+
+// user update
+export const updateAdminUserAction = (data) => async (dispatch) => {
+  const resultPromise = updateAdminUser(data);
+
+  toast.promise(resultPromise, {
+    pending: "please wait..",
+  });
+
+  const { status, message } = await resultPromise;
+
+  toast[status](message);
+
+  status === "success" && dispatch(getAdminUserAction());
+};
+
+// update user password action
+export const updateAdminUserPasswordAction = async (data) => {
+  const resultPromise = updateAdminUserPassword(data);
+
+  toast.promise(resultPromise, {
+    pending: "please wait..",
+  });
+
+  const { status, message } = await resultPromise;
+
+  toast[status](message);
+
+  // status === "success" && dispatch(adminLogout());
 };

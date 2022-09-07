@@ -1,18 +1,19 @@
-import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LoginPage } from "./pages/login/Login.js";
-import { AdminRegistration } from "./pages/adminRegistration/AdminRegistration.js";
-import { EmailVerification } from "./pages/adminRegistration/EmaiVerification.js";
+import LoginPage from "./pages/login/LoginPage";
+import AdminRegistration from "./pages/admin-registration/AdminRegistration";
+import EmailVerification from "./pages/admin-registration/EmailVerification";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Dahboard } from "./pages/Dahboard.js";
-import { Product } from "./pages/products/Product";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Product from "./pages/products/Product";
 import { PrivateRouter } from "./components/private-router/PrivateRouter";
-import { Category } from "./pages/category/Category";
-import { PaymentMethod } from "./pages/payment-method/PaymentMethod";
-import { EditProduct } from "./pages/products/EditProduct";
-import { NewProduct } from "./pages/products/NewProduct";
+import Category from "./pages/categories/Category";
+import PaymentMethod from "./pages/payment-method/PaymentMethod";
+import NewProduct from "./pages/products/NewProduct";
+import EditProduct from "./pages/products/EditProduct";
+import { AdminLayout } from "./components/layout/AdminLayout";
+import { AdminProfile } from "./pages/admin-profile/AdminProfile";
 
 function App() {
   return (
@@ -20,42 +21,17 @@ function App() {
       <BrowserRouter>
         <Routes>
           {" "}
-          {/* privte */}{" "}
+          {/* private router */}{" "}
           <Route
             path="/dashboard"
             element={
               <PrivateRouter>
-                {" "}
-                <Dahboard />
+                <Dashboard />
               </PrivateRouter>
             }
           />{" "}
           <Route
             path="/products"
-            element={
-              <PrivateRouter>
-                <Product />
-              </PrivateRouter>
-            }
-          />{" "}
-          <Route
-            path="/categories"
-            element={
-              <PrivateRouter>
-                <Category />
-              </PrivateRouter>
-            }
-          />{" "}
-          <Route
-            path="/payment-method"
-            element={
-              <PrivateRouter>
-                <PaymentMethod />
-              </PrivateRouter>
-            }
-          />{" "}
-          <Route
-            path="/product"
             element={
               <PrivateRouter>
                 <Product />
@@ -78,13 +54,36 @@ function App() {
               </PrivateRouter>
             }
           />{" "}
-          <Route path="/" element={<LoginPage />} />{" "}
-          <Route path="/login" element={<LoginPage />} />{" "}
+          <Route
+            path="/category"
+            element={
+              <PrivateRouter>
+                <Category />
+              </PrivateRouter>
+            }
+          />{" "}
+          <Route
+            path="/payment-method"
+            element={
+              <PrivateRouter>
+                <PaymentMethod />
+              </PrivateRouter>
+            }
+          />
+          <Route
+            path="/admin-profile"
+            element={
+              <PrivateRouter>
+                <AdminProfile />
+              </PrivateRouter>
+            }
+          />
+          {/* public router */} <Route path="/" element={<LoginPage />} />{" "}
           <Route path="/register" element={<AdminRegistration />} />{" "}
           <Route path="/admin/verify-email" element={<EmailVerification />} />{" "}
         </Routes>{" "}
-        <ToastContainer />{" "}
       </BrowserRouter>{" "}
+      <ToastContainer />
     </div>
   );
 }

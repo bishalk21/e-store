@@ -1,59 +1,58 @@
-import React from "react";
+import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Container from "react-bootstrap/Container";
-import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setShowMenu } from "../../pages/system-st/SystemSlice.js";
-import { logoutAdminUserAction } from "../../pages/login/userAction.js";
+import { Link, useNavigate } from "react-router-dom";
+import { adminLogout } from "../../pages/login/userAction";
+import { setShowSideMenu } from "../../pages/system-state/systemSlice";
 
 export const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.admin);
 
-  const handleShow = () => dispatch(setShowMenu(true));
+  const { user } = useSelector((state) => state.admin);
+  const handleShow = () => dispatch(setShowSideMenu(true));
 
   const hanldeOnLogout = () => {
-    // dispatch(setShowMenu(false));
-    dispatch(logoutAdminUserAction());
+    dispatch(adminLogout());
     navigate("/");
   };
-
   return (
-    <div>
-      <Navbar className="navbar" collapseOnSelect expand="md">
-        <Container>
-          <div>
-            {user && user._id && (
-              <i class="fa-solid fa-bars" onClick={handleShow}></i>
-            )}
-            <Navbar.Brand href="/"> eStore </Navbar.Brand>{" "}
-          </div>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
-              {user._id ? (
-                <Link className="nav-link" to="/" onClick={hanldeOnLogout}>
-                  Logout{" "}
+    <Navbar collapseOnSelect bg="#fff" variant="light" expand="md">
+      <Container>
+        <div>
+          {user._id && (
+            <i className="fa-solid fa-bars" onClick={handleShow}></i>
+          )}{" "}
+          <Navbar.Brand href="#">eStore</Navbar.Brand>
+        </div>
+
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto">
+            {user._id ? (
+              <>
+                <Link className="nav-link" to="/admin-profile">
+                  <i className="fa-solid fa-user"></i>
                 </Link>
-              ) : (
-                (
-                  <Link className="nav-link" to="/">
-                    {" "}
-                    Login{" "}
-                  </Link>
-                ) && (
-                  <Link className="nav-link" to="/register">
-                    {" "}
-                    Register{" "}
-                  </Link>
-                )
-              )}
-            </Nav>{" "}
-          </Navbar.Collapse>{" "}
-        </Container>{" "}
-      </Navbar>{" "}
-    </div>
+
+                <Link className="nav-link" to="/" onClick={hanldeOnLogout}>
+                  Logout
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link className="nav-link" to="/">
+                  Login
+                </Link>
+                <Link className="nav-link" to="/register">
+                  Register
+                </Link>
+              </>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };

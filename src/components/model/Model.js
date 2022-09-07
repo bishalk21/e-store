@@ -1,8 +1,7 @@
-import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { setModalShow } from "../../pages/system-st/SystemSlice";
+import { setModalShow } from "../../pages/system-state/systemSlice";
 
 export const CustomModal = ({ title, children }) => {
   const dispatch = useDispatch();
@@ -10,7 +9,7 @@ export const CustomModal = ({ title, children }) => {
   return (
     <Modal
       show={modalShow}
-      onHide={() => dispatch(setModalShow())}
+      onHide={() => dispatch(setModalShow(false))}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -18,18 +17,16 @@ export const CustomModal = ({ title, children }) => {
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">{title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <div className="">{children}</div>
-      </Modal.Body>
+      <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>
-        <Button onClick={() => dispatch(setModalShow())}>Close</Button>
+        <Button onClick={() => dispatch(setModalShow(false))}>Close</Button>
       </Modal.Footer>
     </Modal>
   );
 };
 
 // function App() {
-//   const [modalShow, setModalShow] = useState(false);
+//   const [modalShow, setModalShow] = React.useState(false);
 
 //   return (
 //     <>
@@ -37,10 +34,9 @@ export const CustomModal = ({ title, children }) => {
 //         Launch vertically centered modal
 //       </Button>
 
-//       <CustomModal
-//         title="Edit Category"
+//       <MyVerticallyCenteredModal
 //         show={modalShow}
-//         onHide={() => setModalShow(false)}
+//         onHide={() => seow(false)}
 //       />
 //     </>
 //   );

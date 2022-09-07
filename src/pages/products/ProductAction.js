@@ -1,34 +1,53 @@
 import { toast } from "react-toastify";
 import {
   deleteProduct,
-  fetchAllProducts,
+  fetchProducts,
   postProduct,
-} from "../../helper/axiosHelper";
-import { setProducts, setSelectedProduct } from "./ProductSlice";
+  updateProduct,
+} from "../../helpers/axiosHelper";
+import { setProducts, setSelectedProduct } from "./productSlice";
 
-export const getProductAction = () => async (dispatch) => {
-  const { status, products } = await fetchAllProducts();
+export const getProductsAction = () => async (dispatch) => {
+  const { status, products } = await fetchProducts();
   status === "success" && dispatch(setProducts(products));
 };
 
-export const getSingleProductAction = (_id) => async (dispatch) => {
-  const { status, products } = await fetchAllProducts(_id);
+export const getSingleProductsAction = (_id) => async (dispatch) => {
+  const { status, products } = await fetchProducts(_id);
   status === "success" && dispatch(setSelectedProduct(products));
 };
 
-//product action
-export const postProductAction = async (data) => {
+export const postProductsAction = async (data) => {
   const responsePending = postProduct(data);
-  toast.promise(responsePending, { pending: "Saving..." });
+  toast.promise(responsePending, {
+    pending: "Please wait...",
+  });
+
   const { status, message } = await responsePending;
+
   toast[status](message);
-  // status === "success" && dispatch(getProductAction());
 };
 
-export const deleteProductAction = async (_id, data) => {
-  const responsePending = deleteProduct(_id, data);
-  toast.promise(responsePending, { pending: "Saving..." });
+// update
+export const updateProductsAction = (data) => async (dispatch) => {
+  const responsePending = updateProduct(data);
+  toast.promise(responsePending, {
+    pending: "Please wait...",
+  });
+
   const { status, message } = await responsePending;
+
   toast[status](message);
-  // status === "success" && dispatch(getProductAction());
+  status === "success" && dispatch(getSingleProductsAction(data._id));
+};
+
+export const deleteProductsAction = async (_id, data) => {
+  const responsePending = deleteProduct(_id, data);
+  toast.promise(responsePending, {
+    pending: "Please wait...",
+  });
+
+  const { status, message } = await responsePending;
+
+  toast[status](message);
 };

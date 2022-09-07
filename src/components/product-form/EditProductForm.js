@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoriesAction } from "../../pages/categories/categoryAction";
-import { postProductsAction } from "../../pages/products/productAction";
+import {
+  postProductsAction,
+  updateProductsAction,
+} from "../../pages/products/productAction";
 import { CustomInputField } from "../customInputField/CustomInputField";
 
 const initialState = {
@@ -16,17 +19,21 @@ const initialState = {
   salesStartDate: null,
   salesEndDate: null,
   description: "",
+  thumbnail: "",
 };
 
-export const AddProductForm = () => {
+export const EditProductForm = () => {
   const dispatch = useDispatch();
   const [form, setForm] = useState(initialState);
   const [images, setImges] = useState([]);
   const { categories } = useSelector((state) => state.category);
+  const { selectedProduct } = useSelector((state) => state.products);
 
+  const [imgToDel, setImgToDel] = useState([]);
   useEffect(() => {
     !categories.length && dispatch(getCategoriesAction());
-  }, [categories, dispatch]);
+    setForm(selectedProduct);
+  }, [categories, dispatch, selectedProduct]);
 
   const handleOnChange = (e) => {
     let { checked, name, value } = e.target;
@@ -53,15 +60,30 @@ export const AddProductForm = () => {
 
     //set data with FormData
     const formData = new FormData();
+
+    const { sku, slug, rating, createdAt, updatedAt, __v, ...rest } = form;
+
     //append form data
-    for (const key in form) {
-      formData.append(key, form[key]);
+    for (const key in rest) {
+      formData.append(key, rest[key]);
     }
     // append images
 
-    [...images].map((img) => formData.append("images", img));
+    [...images].map((img) => formData.append("newImages", img));
 
-    dispatch(postProductsAction(formData));
+    //append images to delete
+    formData.append("imgToDel", imgToDel);
+
+    dispatch(updateProductsAction(formData));
+  };
+
+  const handleOnImageDelete = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setImgToDel([...imgToDel, value]);
+    } else {
+      setImgToDel(imgToDel.filter((img) => img !== value));
+    }
   };
 
   const inputFields = [
@@ -80,6 +102,7 @@ export const AddProductForm = () => {
       type: "text",
       placeholder: "Product's unique code",
       required: true,
+      disabled: true,
     },
     {
       name: "qty",
@@ -144,21 +167,25 @@ export const AddProductForm = () => {
             label="Status"
             checked={form.status === "active"}
             onChange={handleOnChange}
-          />{" "}
+          />
         </Form.Group>
+
         <Form.Group className="py-3">
-          <Form.Label> Assign to Category </Form.Label>{" "}
+          <Form.Label>Assign to Category</Form.Label>
           <Form.Select name="catId" onChange={handleOnChange} required>
-            <option value=""> Select Category </option>{" "}
+            <option value=""> Select Category</option>
             {categories.length > 0 &&
               categories.map(
                 (item) =>
-                  !item.parentId && (
-                    <option value={item._id}> {item.name} </option>
+                  item.parentId && (
+                    <option value={item._id} selected={item._id === form.catId}>
+                      {item.name}
+                    </option>
                   )
-              )}{" "}
-          </Form.Select>{" "}
+              )}
+          </Form.Select>
         </Form.Group>
+
         {inputFields.map((item, i) => (
           <CustomInputField
             {...item}
@@ -166,11 +193,41 @@ export const AddProductForm = () => {
               item.name === "images" ? handleOnImageSelect : handleOnChange
             }
           />
-        ))}{" "}
+        ))}
+
+        <div className="my-5 d-flex flex-wrap">
+          {selectedProduct?.images?.length &&
+            selectedProduct.images.map((imgLink) => (
+              <div className="p-1" key={imgLink}>
+                <Form.Check
+                  type="radio"
+                  label="Use as a thumbnail"
+                  name="thumbnail"
+                  value={imgLink}
+                  onChange={handleOnChange}
+                  checked={imgLink === form.thumbnail}
+                />
+                <img
+                  src={process.env.REACT_APP_SERVER_ROOT + imgLink}
+                  alt=""
+                  className="img-fluid"
+                  width="150px"
+                  crossOrigin="anonymous"
+                />
+
+                <Form.Check
+                  label="Delete"
+                  value={imgLink}
+                  onChange={handleOnImageDelete}
+                />
+              </div>
+            ))}
+        </div>
+
         <Button variant="primary" type="submit">
-          Submit Product{" "}
-        </Button>{" "}
-      </Form>{" "}
+          Submit Product
+        </Button>
+      </Form>
     </div>
   );
 };

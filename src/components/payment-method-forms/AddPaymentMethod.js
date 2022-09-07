@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { CustomInoutFiedld } from "../../components/customInoutField/CustomInoutFiedld";
-import { CustomModal } from "../../components/modal/modal";
-import { postPaymentMethod } from "../payment-method/PaymentAction";
+import { postPmsAction } from "../../pages/payment-method/pmAction";
+import { CustomInputField } from "../customInputField/CustomInputField";
+import { CustomModal } from "../model/Model";
 
 const initialState = {
-  name: "",
   status: "",
+  name: "",
   description: "",
 };
 export const AddPaymentMethod = () => {
   const dispatch = useDispatch();
-  const [form, setForm] = useState(initialState); //form is an object
+  const [form, setForm] = useState(initialState);
 
   const handleOnChange = (e) => {
-    let { name, value, checked } = e.target;
+    let { checked, name, value } = e.target;
 
     if (name === "status") {
       value = checked ? "active" : "inactive";
@@ -30,16 +30,16 @@ export const AddPaymentMethod = () => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     console.log(form);
-    dispatch(postPaymentMethod(form));
+    dispatch(postPmsAction(form));
   };
 
-  const inputFields = [
+  const inputeFields = [
     {
       name: "name",
       label: "Name",
       type: "text",
       required: true,
-      placeholder: "Enter Category Name",
+      placeholder: "Enter category name",
     },
     {
       name: "description",
@@ -47,29 +47,30 @@ export const AddPaymentMethod = () => {
       type: "text",
       as: "textarea",
       required: true,
-      placeholder: "write Information about the payment method",
+      placeholder: "Write Information about the payment method",
     },
   ];
   return (
-    <CustomModal>
+    <CustomModal title="Add new payment method">
       <Form onSubmit={handleOnSubmit}>
         <Form.Group>
           <Form.Check
             type="switch"
-            label="Status"
             name="status"
+            label="Status"
             onChange={handleOnChange}
-          />{" "}
-        </Form.Group>{" "}
-        {inputFields.map((item, i) => (
-          <CustomInoutFiedld key={i} {...item} onChange={handleOnChange} />
+          />
+        </Form.Group>
+        {inputeFields.map((item, i) => (
+          <CustomInputField key={i} {...item} onChange={handleOnChange} />
         ))}
+
         <Form.Group>
           <Button variant="success" type="submit">
-            Add Payment Method{" "}
-          </Button>{" "}
-        </Form.Group>{" "}
-      </Form>{" "}
+            Add Payment Method
+          </Button>
+        </Form.Group>
+      </Form>
     </CustomModal>
   );
 };

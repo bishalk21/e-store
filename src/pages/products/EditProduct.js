@@ -3,44 +3,50 @@ import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { AdminLayout } from "../../components/layout/AdminLayout";
-import { deleteProductAction, getSingleProductAction } from "./ProductAction";
+import { EditProductForm } from "../../components/product-form/EditProductForm";
+import { deleteProductsAction, getSingleProductsAction } from "./productAction";
 
-export const EditProduct = () => {
+const EditProduct = () => {
   const dispatch = useDispatch();
   const { _id } = useParams();
 
-  const { selectedProduct } = useSelector((state) => state.product);
+  const { selectedProduct } = useSelector((state) => state.products);
 
   useEffect(() => {
-    _id && dispatch(getSingleProductAction(_id));
+    _id && dispatch(getSingleProductsAction(_id));
   }, [_id, dispatch]);
 
-  const handleOnDelete = (_id) => {
-    if (window.confirm("Are you sure?")) {
+  const handleOnDelete = () => {
+    if (window.confirm("Are you sure, you want to delete this product?")) {
       const { thumbnail, images } = selectedProduct;
       const imgs = [thumbnail, ...images];
-      // console.log([thumbnail, ...images]);
-      deleteProductAction(_id, [...new Set(imgs)]);
+
+      deleteProductsAction(_id, [...new Set(imgs)]);
     }
   };
 
   return (
     <AdminLayout>
       <div className="mt-3 mb-3">
-        <Link to="/product">
-          <Button variant="primary">
-            <i className="fas fa-arrow-left"> </i> Back{" "}
-          </Button>{" "}
-        </Link>{" "}
-      </div>{" "}
-      <h1> Update Product </h1> <hr />
-      <div className="hhh"></div>
+        <Link to="/products">
+          <Button variant="none">
+            <i class="fa-solid fa-angle-left"></i> Back
+          </Button>
+        </Link>
+      </div>
+      <h1>Update Product </h1>
+      <hr />
+      <div className="">
+        <EditProductForm />
+      </div>
+
       <div className="text-end py-3">
-        <Button variant="danger" onClick={() => handleOnDelete(_id)}>
-          {" "}
-          Delete Product{" "}
-        </Button>{" "}
+        <Button variant="danger" onClick={handleOnDelete}>
+          Delete Product
+        </Button>
       </div>
     </AdminLayout>
   );
 };
+
+export default EditProduct;

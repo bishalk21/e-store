@@ -1,53 +1,60 @@
 import React, { useState } from "react";
-import { Button, Col, Form, FormGroup, Row } from "react-bootstrap";
+import { Form, Row, Col, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { postNewCategoryAction } from "../../pages/category/categoriesAction";
+import { postCategoriesAction } from "../../pages/categories/categoryAction";
 
 const initialState = {
   status: "inactive",
   name: "",
   parentId: null,
 };
+
 export const AddCatForm = () => {
-  const [form, setForm] = useState(initialState);
   const dispatch = useDispatch();
+  const [form, setForm] = useState(initialState);
   const { categories } = useSelector((state) => state.category);
 
   const handleOnChange = (e) => {
-    let { checked, value, name } = e.target;
+    let { checked, name, value } = e.target;
 
-    // console.log(checked, value, name);
     if (name === "status") {
       value = checked ? "active" : "inactive";
     }
-    setForm({ ...form, [name]: value });
+
+    setForm({
+      ...form,
+      [name]: value,
+    });
   };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    // console.log(form);
-    dispatch(postNewCategoryAction(form));
+
+    dispatch(postCategoriesAction(form));
   };
 
   return (
     <Form
-      className="border p-3 mb-5 bg-white rounded py-5"
+      className="py-4 mb-5 border p-3 shadow-lg rounded"
       onSubmit={handleOnSubmit}
     >
-      <h4 className="mb-4">Add New Category</h4>
-      <Row className="g-2 shadow-sm ">
+      <h4 className="mb-3">Add new Category</h4>
+
+      <Row className="g-2">
         <Col md="2">
-          <Form.Check
-            type="switch"
-            name="status"
-            label="status"
-            onChange={handleOnChange}
-          />
+          <Form.Group>
+            <Form.Check
+              name="status"
+              label="status"
+              type="switch"
+              onChange={handleOnChange}
+            />
+          </Form.Group>
         </Col>
         <Col md="4">
-          <FormGroup>
+          <Form.Group>
             <Form.Select name="parentId" onChange={handleOnChange}>
-              <option value="">Select Parent Category</option>
+              <option value=""> Select Parent Category</option>
               {categories.length > 0 &&
                 categories.map(
                   (item) =>
@@ -56,23 +63,23 @@ export const AddCatForm = () => {
                     )
                 )}
             </Form.Select>
-          </FormGroup>
+          </Form.Group>
         </Col>
         <Col md="4">
-          <FormGroup>
+          <Form.Group>
             <Form.Control
-              type="text"
               name="name"
-              placeholder="Enter Category Name"
+              type="text"
+              placeholder="Enter category name"
               onChange={handleOnChange}
               required
             />
-          </FormGroup>
+          </Form.Group>
         </Col>
         <Col md="2">
           <Button variant="primary" type="submit">
             Add Category
-          </Button>
+          </Button>{" "}
         </Col>
       </Row>
     </Form>
