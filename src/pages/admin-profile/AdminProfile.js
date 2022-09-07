@@ -64,13 +64,13 @@ export const AdminProfile = () => {
 
   const handleOnPasswordSubmit = (e) => {
     e.preventDefault();
-    const { newPassword, confirmPassword, oldPassword } = password;
+    const { newPassword, confirmPassword } = password;
 
-    if (!oldPassword || newPassword !== confirmPassword)
+    if (!password.password || newPassword !== confirmPassword)
       return alert("Either password or confirm password is empty");
 
     updateAdminUserPasswordAction({
-      password: password.oldPassword,
+      password: password.password,
       newPassword,
       _id: user._id,
     });
@@ -145,7 +145,7 @@ export const AdminProfile = () => {
             label="Old Password"
             type="password"
             required={true}
-            name="oldPassword"
+            name="password"
           />
           <CustomInputField
             onChange={handleOnPasswordUpdate}
