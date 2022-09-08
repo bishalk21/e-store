@@ -14,6 +14,7 @@ import NewProduct from "./pages/products/NewProduct";
 import EditProduct from "./pages/products/EditProduct";
 import { AdminLayout } from "./components/layout/AdminLayout";
 import { AdminProfile } from "./pages/admin-profile/AdminProfile";
+import { ResetPassword } from "./pages/login/ResetPassword";
 
 function App() {
   return (
@@ -69,7 +70,7 @@ function App() {
                 <PaymentMethod />
               </PrivateRouter>
             }
-          />
+          />{" "}
           <Route
             path="/admin-profile"
             element={
@@ -77,10 +78,11 @@ function App() {
                 <AdminProfile />
               </PrivateRouter>
             }
-          />
+          />{" "}
           {/* public router */} <Route path="/" element={<LoginPage />} />{" "}
           <Route path="/register" element={<AdminRegistration />} />{" "}
           <Route path="/admin/verify-email" element={<EmailVerification />} />{" "}
+          <Route path="/reset-password" element={<ResetPassword />} />{" "}
         </Routes>{" "}
       </BrowserRouter>{" "}
       <ToastContainer />

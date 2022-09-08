@@ -67,6 +67,10 @@ const LoginPage = () => {
               Login
             </Button>
           </Form>
+          {/* forgot password */}
+          <div className="forgot-password text-end">
+            <a href="/reset-password">Forgot password ?</a>
+          </div>
         </div>
       </Container>
 

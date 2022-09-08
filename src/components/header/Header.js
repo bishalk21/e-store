@@ -33,20 +33,20 @@ export const Header = () => {
             {user._id ? (
               <>
                 <Link className="nav-link" to="/admin-profile">
-                  <i className="fa-solid fa-user"></i>
+                  <i className="fa-solid fa-user"></i> Profile
                 </Link>
 
                 <Link className="nav-link" to="/" onClick={hanldeOnLogout}>
-                  Logout
+                  <i className="fa-solid fa-sign-out"></i> Logout
                 </Link>
               </>
             ) : (
               <>
                 <Link className="nav-link" to="/">
-                  Login
+                  <i className="fa-solid fa-sign-in"></i> Login
                 </Link>
                 <Link className="nav-link" to="/register">
-                  Register
+                  <i className="fa-solid fa-user-plus"></i> Register
                 </Link>
               </>
             )}
