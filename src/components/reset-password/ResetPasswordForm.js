@@ -36,18 +36,19 @@ export const ResetPasswordForm = ({ handleOnPasswordUpdate }) => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    handleOnPasswordUpdate(form);
+    const { confirmPassword, ...rest } = form;
+    handleOnPasswordUpdate(rest);
   };
   return (
     <div>
       <div className="form">
-        <h2>Verify OTP</h2>
+        <h2>Reset New Password</h2>
         <hr />
         <Form onSubmit={handleOnSubmit}>
           <CustomInputField
             onChange={handleOnChange}
             label="OTP"
-            name="OTP"
+            name="otp"
             type="number"
             required={true}
             placeholder="Enter OTP"
@@ -84,6 +85,10 @@ export const ResetPasswordForm = ({ handleOnPasswordUpdate }) => {
           </Form.Group>
         </Form>
         {/* Button */}
+        <div className="text-end py-3">
+          {/* resend otp */}
+          <a href="/reset-password">Resend OTP</a>
+        </div>
       </div>
     </div>
   );

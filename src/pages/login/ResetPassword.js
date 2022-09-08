@@ -5,11 +5,15 @@ import { Footer } from "../../components/footer/Footer";
 import { Header } from "../../components/header/Header";
 import { RequestOtp } from "../../components/reset-password/RequestOtp";
 import { ResetPasswordForm } from "../../components/reset-password/ResetPasswordForm";
-import { resetAdminUserPassword } from "../../helpers/axiosHelper";
+import {
+  reqOtpResetAdminUserPassword,
+  resetAdminUserPassword,
+} from "../../helpers/axiosHelper";
 
 export const ResetPassword = () => {
-  const [passwordForm, setPasswordForm] = useState("password");
+  const [passwordForm, setPasswordForm] = useState("otp");
   const [resp, setResp] = useState({});
+  const [userEmail, setUserEmail] = useState("");
 
   const handleOnOtpReq = async (email) => {
     if (!email) {
@@ -17,15 +21,19 @@ export const ResetPassword = () => {
       return;
     }
 
+    setUserEmail(email);
+
     if (email) {
-      const response = await resetAdminUserPassword({ email });
+      const response = await reqOtpResetAdminUserPassword({ email });
       setResp(response);
-      response.status === "success" && setPasswordForm("reset");
+      response.status === "success" && setPasswordForm("password");
     }
   };
 
   const handleOnPasswordUpdate = async (data) => {
-    console.log(data);
+    data.email = userEmail;
+    const response = await resetAdminUserPassword(data);
+    setResp(response);
   };
 
   const form = {

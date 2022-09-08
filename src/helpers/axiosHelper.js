@@ -124,11 +124,22 @@ export const updateAdminUserPassword = (data) => {
 }
 
 
-// update user password
-export const resetAdminUserPassword = (data) => {
+// update request password otp 
+export const reqOtpResetAdminUserPassword = (data) => {
   const option = {
     method: "post",
     url: adminUserEP + "/request-password-reset-otp",
+    data,
+  };
+  return apiProcesser(option);
+
+}
+
+// update reset password 
+export const resetAdminUserPassword = (data) => {
+  const option = {
+    method: "patch",
+    url: adminUserEP + "/reset-password",
     data,
   };
   return apiProcesser(option);
