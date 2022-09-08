@@ -123,6 +123,18 @@ export const updateAdminUserPassword = (data) => {
   return apiProcesser(option);
 }
 
+
+// update user password
+export const resetAdminUserPassword = (data) => {
+  const option = {
+    method: "post",
+    url: adminUserEP + "/request-password-reset-otp",
+    data,
+  };
+  return apiProcesser(option);
+
+}
+
 //fetch new accessJWT
 export const getNewAccessJWT = async () => {
   const token = localStorage.getItem("refreshJWT");
