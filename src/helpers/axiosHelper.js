@@ -4,6 +4,7 @@ const adminUserEP = rootUrl + "/admin-user";
 const categoryEP = rootUrl + "/category";
 const PMEP = rootUrl + "/payment-method";
 const productEP = rootUrl + "/product";
+const orderEP = rootUrl + "/order";
 
 const apiProcesser = async ({
   method,
@@ -287,3 +288,15 @@ export const deleteProduct = (_id, data) => {
   };
   return apiProcesser(option);
 };
+
+// ============ order apis
+
+export const fetchOrders = (_id) => {
+  const url = _id ? orderEP + "/" + _id : orderEP;
+  const option = {
+    method: "get",
+    url,
+    isPrivate: true,
+  };
+  return apiProcesser(option);
+}

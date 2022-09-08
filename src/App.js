@@ -12,9 +12,9 @@ import Category from "./pages/categories/Category";
 import PaymentMethod from "./pages/payment-method/PaymentMethod";
 import NewProduct from "./pages/products/NewProduct";
 import EditProduct from "./pages/products/EditProduct";
-import { AdminLayout } from "./components/layout/AdminLayout";
 import { AdminProfile } from "./pages/admin-profile/AdminProfile";
 import { ResetPassword } from "./pages/login/ResetPassword";
+import { OrderPage } from "./pages/order/OrderPage";
 
 function App() {
   return (
@@ -76,6 +76,14 @@ function App() {
             element={
               <PrivateRouter>
                 <AdminProfile />
+              </PrivateRouter>
+            }
+          />{" "}
+          <Route
+            path="/orders"
+            element={
+              <PrivateRouter>
+                <OrderPage />
               </PrivateRouter>
             }
           />{" "}
