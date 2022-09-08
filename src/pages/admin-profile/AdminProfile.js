@@ -49,6 +49,18 @@ export const AdminProfile = () => {
       !/[a-z]/.test(newPassword) &&
         setError("Password must contain a lowercase letter");
 
+      // password must contain at least one special character
+      !/[!@#$%^&*]/.test(password) &&
+        setError("Password must contain a special character");
+      // password must not contain spaces
+      /\s/.test(password) && setError("Password must not contain spaces");
+      // password must not contain the email address
+      password.includes(form.email) &&
+        setError("Password must not contain the email address");
+      // password must not contain the user's first or last name
+      password.includes(form.fName) &&
+        setError("Password must not contain the user's first name");
+
       // uppercase check
       !/[A-Z]/.test(newPassword) &&
         setError("Password must contain an uppercase letter");

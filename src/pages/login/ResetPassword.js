@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Alert, Container } from "react-bootstrap";
+import { Footer } from "../../components/footer/Footer";
 // import { useSelector } from "react-redux";
 import { Header } from "../../components/header/Header";
 import { RequestOtp } from "../../components/reset-password/RequestOtp";
@@ -7,7 +8,7 @@ import { ResetPasswordForm } from "../../components/reset-password/ResetPassword
 import { resetAdminUserPassword } from "../../helpers/axiosHelper";
 
 export const ResetPassword = () => {
-  const [passwordForm, setPasswordForm] = useState("otp");
+  const [passwordForm, setPasswordForm] = useState("password");
   const [resp, setResp] = useState({});
 
   const handleOnOtpReq = async (email) => {
@@ -23,9 +24,15 @@ export const ResetPassword = () => {
     }
   };
 
+  const handleOnPasswordUpdate = async (data) => {
+    console.log(data);
+  };
+
   const form = {
     otp: <RequestOtp handleOnOtpReq={handleOnOtpReq} />,
-    reset: <ResetPasswordForm />,
+    password: (
+      <ResetPasswordForm handleOnPasswordUpdate={handleOnPasswordUpdate} />
+    ),
   };
 
   return (
@@ -40,6 +47,7 @@ export const ResetPassword = () => {
         )}
         <div className="pass-forms">{form[passwordForm]}</div>
       </Container>
+      <Footer />
     </div>
   );
 };
