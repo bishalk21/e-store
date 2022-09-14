@@ -15,6 +15,7 @@ import EditProduct from "./pages/products/EditProduct";
 import { AdminProfile } from "./pages/admin-profile/AdminProfile";
 import { ResetPassword } from "./pages/login/ResetPassword";
 import { OrderPage } from "./pages/order/OrderPage";
+import { OrderDetails } from "./pages/order/OrderDetails";
 
 function App() {
   return (
@@ -84,6 +85,14 @@ function App() {
             element={
               <PrivateRouter>
                 <OrderPage />
+              </PrivateRouter>
+            }
+          />{" "}
+          <Route
+            path="/order/:_id"
+            element={
+              <PrivateRouter>
+                <OrderDetails />
               </PrivateRouter>
             }
           />{" "}

@@ -21,38 +21,40 @@ export const Header = () => {
     <Navbar collapseOnSelect bg="#fff" variant="light" expand="md">
       <Container>
         <div>
+          {" "}
           {user._id && (
-            <i className="fa-solid fa-bars" onClick={handleShow}></i>
+            <i className="fa-solid fa-bars" onClick={handleShow}>
+              {" "}
+            </i>
           )}{" "}
-          <Navbar.Brand href="#">eStore</Navbar.Brand>
+          <Navbar.Brand href="#"> eStore </Navbar.Brand>{" "}
         </div>
-
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
+            {" "}
             {user._id ? (
               <>
                 <Link className="nav-link" to="/admin-profile">
-                  <i className="fa-solid fa-user"></i> Profile
+                  <i className="fa-solid fa-user"> </i> Profile{" "}
                 </Link>
-
                 <Link className="nav-link" to="/" onClick={hanldeOnLogout}>
-                  <i className="fa-solid fa-sign-out"></i> Logout
-                </Link>
+                  <i className="fa-solid fa-sign-out"> </i> Logout{" "}
+                </Link>{" "}
               </>
             ) : (
               <>
                 <Link className="nav-link" to="/">
-                  <i className="fa-solid fa-sign-in"></i> Login
-                </Link>
+                  <i className="fa-solid fa-sign-in"> </i> Login{" "}
+                </Link>{" "}
                 <Link className="nav-link" to="/register">
-                  <i className="fa-solid fa-user-plus"></i> Register
-                </Link>
+                  <i className="fa-solid fa-user-plus"> </i> Register{" "}
+                </Link>{" "}
               </>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
+            )}{" "}
+          </Nav>{" "}
+        </Navbar.Collapse>{" "}
+      </Container>{" "}
     </Navbar>
   );
 };

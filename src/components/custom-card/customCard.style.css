@@ -1,0 +1,18 @@
+.card {
+    background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
+    border-radius: 3px;
+}
+
+.card-title {
+    font-size: 3rem;
+    font-weight: 300;
+    border: 1px solid #fff;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
