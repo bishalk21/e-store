@@ -12,7 +12,7 @@ export const ProductTable = () => {
 
   useEffect(() => {
     dispatch(getProductsAction());
-  }, [dispatch]);
+  }, []);
   return (
     <Table striped bordered hover>
       <thead>

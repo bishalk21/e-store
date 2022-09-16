@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Alert, Button, Form } from "react-bootstrap";
 import { CustomInputField } from "../customInputField/CustomInputField";
 
 export const ResetPasswordForm = ({ handleOnPasswordUpdate }) => {
@@ -8,29 +8,26 @@ export const ResetPasswordForm = ({ handleOnPasswordUpdate }) => {
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
+
     setForm({ ...form, [name]: value });
     setError("");
-
+    //error boundry
     const { password } = form;
+    console.log(password);
     if (name === "confirmPassword") {
-      // password and confirm password must match
       password !== value &&
-        setError("Password and confirm password must match");
+        setError("password and confirm password must match");
 
-      // password must be at least 8 characters long
-      password.length < 8 && setError("Password must be at least 8 characters");
+      password.length < 6 &&
+        setError("password must be longer than 6 charater");
+      !/[a-z]/.test(password) &&
+        setError("password must contain atleast one lowercase");
+      !/[A-Z]/.test(password) &&
+        setError("password must contain atleast one uppercase");
+      !/[0-9]/.test(password) &&
+        setError("password must contain atleast one number");
 
-      // password must contain at least one lowercase letter
-      !/[a-z]/.test(password) && setError("Password must contain a lowercase");
-
-      // password must contain at least one uppercase letter
-      !/[A-Z]/.test(password) && setError("Password must contain an uppercase");
-
-      // password must contain at least one number
-      !/[0-9]/.test(password) && setError("Password must contain a number");
-
-      // password must be provided
-      !password && setError("Password is required");
+      !password && setError("password must be provide");
     }
   };
 
@@ -39,57 +36,55 @@ export const ResetPasswordForm = ({ handleOnPasswordUpdate }) => {
     const { confirmPassword, ...rest } = form;
     handleOnPasswordUpdate(rest);
   };
+
   return (
-    <div>
-      <div className="form">
-        <h2>Reset New Password</h2>
-        <hr />
-        <Form onSubmit={handleOnSubmit}>
-          <CustomInputField
-            onChange={handleOnChange}
-            label="OTP"
-            name="otp"
-            type="number"
-            required={true}
-            placeholder="Enter OTP"
-          />
-          <CustomInputField
-            onChange={handleOnChange}
-            label="New Password"
-            name="password"
-            type="password"
-            placeholder="Enter New Password"
-            required={true}
-          />
-          <Form.Group>
-            <Form.Text className="text-muted">
-              Note: Password must be at least 8 characters long, contain at
-              least one number, one uppercase and one lowercase letter.
-            </Form.Text>
-          </Form.Group>
-          <CustomInputField
-            onChange={handleOnChange}
-            label="Confirm Password"
-            name="confirmPassword"
-            type="password"
-            placeholder="Confirm Password"
-          />
-          {/* error */}
-          <Form.Group>
-            {error && <Form.Text className="text-danger">{error}</Form.Text>}
-          </Form.Group>
-          <Form.Group className="d-grid gap-2">
-            <Button variant="primary" type="submit" disabled={error}>
-              Update Password
-            </Button>
-          </Form.Group>
-        </Form>
-        {/* Button */}
+    <div className="form">
+      <h2>Reset New Password </h2>
+      <hr />
+
+      <Form onSubmit={handleOnSubmit}>
+        <CustomInputField
+          onChange={handleOnChange}
+          label="OTP"
+          name="otp"
+          type="number"
+          required={true}
+          placeholder="check your email for otp"
+        />
+        <CustomInputField
+          onChange={handleOnChange}
+          label="Password"
+          name="password"
+          required={true}
+          type="password"
+          placeholder="*****"
+        />
+        <Form.Group className="py-3">
+          <Form.Text>
+            Note: Password must contain atleaset one number, lowercase,
+            uppercase and must be longer than 6 character.
+          </Form.Text>
+        </Form.Group>
+        <CustomInputField
+          onChange={handleOnChange}
+          label="Confirm Password"
+          name="confirmPassword"
+          required={true}
+          type="password"
+          placeholder="*****"
+        />
+        <Form.Group className="mb-3">
+          {error && <Alert variant="danger">{error}</Alert>}
+        </Form.Group>
+        <Form.Group className="d-grid">
+          <Button variant="warning" type="submit" disabled={error}>
+            Update Password
+          </Button>
+        </Form.Group>
         <div className="text-end py-3">
-          {/* resend otp */}
-          <a href="/reset-password">Resend OTP</a>
+          <a href="/reset-password">Request OTP</a>
         </div>
-      </div>
+      </Form>
     </div>
   );
 };

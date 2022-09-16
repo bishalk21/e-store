@@ -1,18 +1,22 @@
-.card {
-    background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
-    border-radius: 3px;
+.dashboard-product .card {
+  background: linear-gradient(to right, purple, pink);
+  border: none;
 }
 
+.card-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 .card-title {
-    font-size: 3rem;
-    font-weight: 300;
-    border: 1px solid #fff;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
+  font-size: 3rem;
+  border: 6px double yellowgreen;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

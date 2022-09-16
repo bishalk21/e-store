@@ -4,6 +4,7 @@ const initialState = {
   orders: [],
   selectedOrder: {},
 };
+
 const orderSlice = createSlice({
   name: "orders",
   initialState,

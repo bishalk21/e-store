@@ -9,6 +9,9 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     setProducts: (state, { payload }) => {
+      if (!payload && !state.productList) {
+        return;
+      }
       state.productList = payload;
     },
     setSelectedProduct: (state, { payload }) => {

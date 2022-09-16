@@ -19,21 +19,16 @@ export const getSingleProductsAction = (_id) => async (dispatch) => {
 
 export const postProductsAction = async (data) => {
   const responsePending = postProduct(data);
-  toast.promise(responsePending, {
-    pending: "Please wait...",
-  });
+  toast.promise(responsePending, { pending: "Please wait..." });
 
   const { status, message } = await responsePending;
 
   toast[status](message);
 };
 
-// update
 export const updateProductsAction = (data) => async (dispatch) => {
   const responsePending = updateProduct(data);
-  toast.promise(responsePending, {
-    pending: "Please wait...",
-  });
+  toast.promise(responsePending, { pending: "Please wait..." });
 
   const { status, message } = await responsePending;
 
@@ -43,9 +38,7 @@ export const updateProductsAction = (data) => async (dispatch) => {
 
 export const deleteProductsAction = async (_id, data) => {
   const responsePending = deleteProduct(_id, data);
-  toast.promise(responsePending, {
-    pending: "Please wait...",
-  });
+  toast.promise(responsePending, { pending: "Please wait..." });
 
   const { status, message } = await responsePending;
 

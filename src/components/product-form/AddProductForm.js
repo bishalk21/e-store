@@ -49,8 +49,6 @@ export const AddProductForm = () => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    console.log(form);
-
     //set data with FormData
     const formData = new FormData();
     //append form data
@@ -144,21 +142,21 @@ export const AddProductForm = () => {
             label="Status"
             checked={form.status === "active"}
             onChange={handleOnChange}
-          />{" "}
+          />
         </Form.Group>
+
         <Form.Group className="py-3">
-          <Form.Label> Assign to Category </Form.Label>{" "}
+          <Form.Label>Assign to Category</Form.Label>
           <Form.Select name="catId" onChange={handleOnChange} required>
-            <option value=""> Select Category </option>{" "}
+            <option value=""> Select Category</option>
             {categories.length > 0 &&
               categories.map(
                 (item) =>
-                  !item.parentId && (
-                    <option value={item._id}> {item.name} </option>
-                  )
-              )}{" "}
-          </Form.Select>{" "}
+                  item.parentId && <option value={item._id}>{item.name}</option>
+              )}
+          </Form.Select>
         </Form.Group>
+
         {inputFields.map((item, i) => (
           <CustomInputField
             {...item}
@@ -166,11 +164,11 @@ export const AddProductForm = () => {
               item.name === "images" ? handleOnImageSelect : handleOnChange
             }
           />
-        ))}{" "}
+        ))}
         <Button variant="primary" type="submit">
-          Submit Product{" "}
-        </Button>{" "}
-      </Form>{" "}
+          Submit Product
+        </Button>
+      </Form>
     </div>
   );
 };

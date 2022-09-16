@@ -1,19 +1,19 @@
 import { toast } from "react-toastify";
 import {
+  deleteAdminUser,
   getAdminUser,
+  getAllAdminUsers,
   getNewAccessJWT,
   loginAdminUser,
   updateAdminUser,
   updateAdminUserPassword,
 } from "../../helpers/axiosHelper";
-import { setAdminUser } from "./userSlice";
+import { setAdminUser, setAllAdminUsers } from "./userSlice";
 
 export const loginUserAction = (data) => async (dispatch) => {
   const resultPromise = loginAdminUser(data);
 
-  toast.promise(resultPromise, {
-    pending: "please wait..",
-  });
+  toast.promise(resultPromise, { pending: "please wait.." });
 
   const { status, message, user, accessJWT, refreshJWT } = await resultPromise;
 
@@ -55,32 +55,36 @@ export const autoLogin = () => async (dispatch) => {
   }
 };
 
-// user update
-export const updateAdminUserAction = (data) => async (dispatch) => {
-  const resultPromise = updateAdminUser(data);
-
-  toast.promise(resultPromise, {
-    pending: "please wait..",
-  });
-
-  const { status, message } = await resultPromise;
+export const updateAdminProfileAction = (data) => async (dispatch) => {
+  const promisePending = updateAdminUser(data);
+  toast.promise(promisePending, { pending: "Please wait ..." });
+  const { status, message } = await promisePending;
 
   toast[status](message);
 
   status === "success" && dispatch(getAdminUserAction());
 };
 
-// update user password action
-export const updateAdminUserPasswordAction = async (data) => {
-  const resultPromise = updateAdminUserPassword(data);
-
-  toast.promise(resultPromise, {
-    pending: "please wait..",
-  });
-
-  const { status, message } = await resultPromise;
+export const updateAdminPasswordAction = async (data) => {
+  const promisePending = updateAdminUserPassword(data);
+  toast.promise(promisePending, { pending: "Please wait ..." });
+  const { status, message } = await promisePending;
 
   toast[status](message);
+};
 
-  // status === "success" && dispatch(adminLogout());
+export const fetchAdminUsersAciton = () => async (dispatch) => {
+  const { status, users } = await getAllAdminUsers();
+
+  status === "success" && dispatch(setAllAdminUsers(users));
+};
+
+export const deleteAdminUsersAciton = (_id) => async (dispatch) => {
+  const pending = deleteAdminUser(_id);
+  toast.promise(pending, { pending: "Plase wait ..." });
+
+  const { status, message } = await pending;
+  toast[status](message);
+
+  status === "success" && dispatch(fetchAdminUsersAciton());
 };

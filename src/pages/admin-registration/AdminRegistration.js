@@ -4,6 +4,8 @@ import { Header } from "../../components/header/Header";
 import { Alert, Button, Container, Form } from "react-bootstrap";
 import { CustomInputField } from "../../components/customInputField/CustomInputField";
 import { postUser } from "../../helpers/axiosHelper";
+import { AdminLayout } from "../../components/layout/AdminLayout";
+import { Link } from "react-router-dom";
 
 const AdminRegistration = () => {
   const [form, setForm] = useState({});
@@ -87,9 +89,12 @@ const AdminRegistration = () => {
   ];
 
   return (
-    <div>
-      <Header />
-
+    <AdminLayout>
+      <div className="mt-3">
+        <Link to="/admin-users" className="text-decoration-none text-secondary">
+          &lt; Back
+        </Link>
+      </div>
       <Container className="page-main">
         <div className="form">
           <Form onSubmit={handleOnSubmit}>
@@ -115,9 +120,7 @@ const AdminRegistration = () => {
           </Form>
         </div>
       </Container>
-
-      <Footer />
-    </div>
+    </AdminLayout>
   );
 };
 

@@ -1,23 +1,23 @@
 import React from "react";
 import { Table } from "react-bootstrap";
 
-export const CustomTable = ({ tableHead = [], tableData = [] }) => {
+export const CustomTable = ({ tabelHead = [], tableData = [] }) => {
   return (
-    <Table striped bordered hover>
+    <Table striped hover bordered>
       <thead>
         <tr>
-          <th scope="col">#</th>
-          {tableHead.map((head, i) => (
-            <th key={i}>{head}</th>
+          <th>#</th>
+          {tabelHead.map((heading, i) => (
+            <th key={i}>{heading}</th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {tableData.map((user, i) => (
+        {tableData.map((data, i) => (
           <tr key={i}>
             <td>{i + 1}</td>
-            {Object.keys(user).map((key, j) => (
-              <td>{user[key]}</td>
+            {Object.keys(data).map((key, j) => (
+              <td>{data[key]}</td>
             ))}
           </tr>
         ))}

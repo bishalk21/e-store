@@ -12,18 +12,20 @@ import Category from "./pages/categories/Category";
 import PaymentMethod from "./pages/payment-method/PaymentMethod";
 import NewProduct from "./pages/products/NewProduct";
 import EditProduct from "./pages/products/EditProduct";
-import { AdminProfile } from "./pages/admin-profile/AdminProfile";
-import { ResetPassword } from "./pages/login/ResetPassword";
-import { OrderPage } from "./pages/order/OrderPage";
-import { OrderDetails } from "./pages/order/OrderDetails";
+import AdminProfile from "./pages/admin-profile/AdminProfile";
+import ResetPassword from "./pages/login/ResetPassword";
+import Order from "./pages/orders/Order";
+import OrderDetails from "./pages/orders/OrderDetails";
+import Review from "./pages/reviews/Review";
+import Users from "./pages/users/Users";
+import AdminUsers from "./pages/users/AdminUsers";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          {" "}
-          {/* private router */}{" "}
+          {/* private router */}
           <Route
             path="/dashboard"
             element={
@@ -31,7 +33,7 @@ function App() {
                 <Dashboard />
               </PrivateRouter>
             }
-          />{" "}
+          />
           <Route
             path="/products"
             element={
@@ -39,7 +41,7 @@ function App() {
                 <Product />
               </PrivateRouter>
             }
-          />{" "}
+          />
           <Route
             path="/product/new"
             element={
@@ -47,7 +49,7 @@ function App() {
                 <NewProduct />
               </PrivateRouter>
             }
-          />{" "}
+          />
           <Route
             path="/product/edit/:_id"
             element={
@@ -55,7 +57,7 @@ function App() {
                 <EditProduct />
               </PrivateRouter>
             }
-          />{" "}
+          />
           <Route
             path="/category"
             element={
@@ -63,7 +65,7 @@ function App() {
                 <Category />
               </PrivateRouter>
             }
-          />{" "}
+          />
           <Route
             path="/payment-method"
             element={
@@ -71,7 +73,7 @@ function App() {
                 <PaymentMethod />
               </PrivateRouter>
             }
-          />{" "}
+          />
           <Route
             path="/admin-profile"
             element={
@@ -79,15 +81,15 @@ function App() {
                 <AdminProfile />
               </PrivateRouter>
             }
-          />{" "}
+          />
           <Route
             path="/orders"
             element={
               <PrivateRouter>
-                <OrderPage />
+                <Order />
               </PrivateRouter>
             }
-          />{" "}
+          />
           <Route
             path="/order/:_id"
             element={
@@ -95,13 +97,48 @@ function App() {
                 <OrderDetails />
               </PrivateRouter>
             }
-          />{" "}
-          {/* public router */} <Route path="/" element={<LoginPage />} />{" "}
-          <Route path="/register" element={<AdminRegistration />} />{" "}
-          <Route path="/admin/verify-email" element={<EmailVerification />} />{" "}
-          <Route path="/reset-password" element={<ResetPassword />} />{" "}
-        </Routes>{" "}
-      </BrowserRouter>{" "}
+          />
+          <Route
+            path="/reviews"
+            element={
+              <PrivateRouter>
+                <Review />
+              </PrivateRouter>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <PrivateRouter>
+                <Users />
+              </PrivateRouter>
+            }
+          />
+          <Route
+            path="/admin-users"
+            element={
+              <PrivateRouter>
+                <AdminUsers />
+              </PrivateRouter>
+            }
+          />
+
+          <Route
+            path="/register"
+            element={
+              <PrivateRouter>
+                <AdminRegistration />
+              </PrivateRouter>
+            }
+          />
+
+          {/* public router */}
+          <Route path="/" element={<LoginPage />} />
+
+          <Route path="/admin/verify-email" element={<EmailVerification />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+        </Routes>
+      </BrowserRouter>
       <ToastContainer />
     </div>
   );

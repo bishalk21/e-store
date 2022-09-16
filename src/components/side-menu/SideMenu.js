@@ -15,58 +15,67 @@ export const SideMenu = () => {
     <>
       <Offcanvas show={showSideMenu} onHide={handleClose}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title> CMS Admin Panel </Offcanvas.Title>{" "}
-        </Offcanvas.Header>{" "}
+          <Offcanvas.Title>CMS Admin Panel</Offcanvas.Title>
+        </Offcanvas.Header>
         <hr />
         <Offcanvas.Body>
           <ListGroup variant="flush" className="fs-5">
             <ListGroup.Item>
               <Link onClick={handleClose} to="/dashboard" className="nav-link">
-                <i className="fa-solid fa-gauge"> </i> Dashboard{" "}
-              </Link>{" "}
-            </ListGroup.Item>{" "}
+                <i className="fa-solid fa-gauge"></i> Dashboard
+              </Link>
+            </ListGroup.Item>
             <ListGroup.Item>
               <Link onClick={handleClose} to="/category" className="nav-link">
-                <i className="fa-solid fa-list"> </i> Categories{" "}
-              </Link>{" "}
-            </ListGroup.Item>{" "}
+                <i className="fa-solid fa-list"></i> Categories
+              </Link>
+            </ListGroup.Item>
             <ListGroup.Item>
               <Link onClick={handleClose} to="/products" className="nav-link">
-                <i className="fa-solid fa-box"> </i> Products{" "}
-              </Link>{" "}
-            </ListGroup.Item>{" "}
+                <i className="fa-solid fa-box"></i> Products
+              </Link>
+            </ListGroup.Item>
             <ListGroup.Item>
               <Link
                 onClick={handleClose}
                 to="/payment-method"
                 className="nav-link"
               >
-                <i className="fa-solid fa-money-bill-1"> </i> Payment Methods{" "}
-              </Link>{" "}
-            </ListGroup.Item>{" "}
+                <i className="fa-solid fa-money-bill-1"></i> Payment Methods
+              </Link>
+            </ListGroup.Item>
             <ListGroup.Item>
-              <Link onClick={handleClose} to="" className="nav-link">
-                <i className="fa-solid fa-users"> </i> Users{" "}
-              </Link>{" "}
-            </ListGroup.Item>{" "}
+              <Link onClick={handleClose} to="/users" className="nav-link">
+                <i className="fa-solid fa-users"></i> Users
+              </Link>
+            </ListGroup.Item>
             <ListGroup.Item>
               <Link onClick={handleClose} to="/orders" className="nav-link">
-                <i className="fa-solid fa-table-list"> </i> Orders{" "}
-              </Link>{" "}
-            </ListGroup.Item>{" "}
+                <i className="fa-solid fa-table-list"></i> Orders
+              </Link>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Link onClick={handleClose} to="/reviews" className="nav-link">
+                <i className="fa-solid fa-star-half-stroke"></i> Reviews
+              </Link>
+            </ListGroup.Item>
             <ListGroup.Item>
               <Link onClick={handleClose} to="" className="nav-link">
-                <i className="fa-solid fa-star-half-stroke"> </i> Reviews{" "}
-              </Link>{" "}
-            </ListGroup.Item>{" "}
-            <ListGroup.Item>
-              <Link onClick={handleClose} to="" className="nav-link">
-                <i className="fa-solid fa-gear"> </i> Setting{" "}
-              </Link>{" "}
-            </ListGroup.Item>{" "}
-          </ListGroup>{" "}
-        </Offcanvas.Body>{" "}
-      </Offcanvas>{" "}
+                <i className="fa-solid fa-gear"></i> Setting
+              </Link>
+              <ListGroup.Item>
+                <Link
+                  onClick={handleClose}
+                  to="/admin-users"
+                  className="nav-link"
+                >
+                  <i class="fa-solid fa-user-secret"></i> Admin User
+                </Link>
+              </ListGroup.Item>
+            </ListGroup.Item>
+          </ListGroup>
+        </Offcanvas.Body>
+      </Offcanvas>
     </>
   );
 };

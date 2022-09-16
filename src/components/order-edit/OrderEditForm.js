@@ -1,91 +1,94 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleOrderAction } from "../../pages/order/orderAction";
-import { setSelectedOrder } from "../../pages/order/orderSlice";
-import { Button, Form, Table } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedOrder } from "../../pages/orders/orderSlice";
+import { getSingleOrder } from "../../pages/orders/orderAction";
+import { Form, Button, Table } from "react-bootstrap";
 
 export const OrderEditForm = () => {
   const dispatch = useDispatch();
-  const { _id } = useParams(); // useParams is for getting the id from the store
-  const { orders, selectedOrder } = useSelector((state) => state.orders); // get the orders from the redux store
+  const { _id } = useParams();
+  const { orders, selectedOrder } = useSelector((state) => state.orders);
+
   useEffect(() => {
-    // checl if thwe have orders in our store, if so select the order with the id from the store
+    //check if we have orders in our state, if so, selecte the order form the state
     if (orders.length) {
-      const select = orders.filter((item) => item._id == _id)[0]; // find the order with the id from the store
-      console.log(orders, select, _id);
-      dispatch(setSelectedOrder(select)); // set the selected order in the store
+      const select = orders.filter((item) => item._id === _id)[0];
+      dispatch(setSelectedOrder(select));
     } else {
-      // if we dont have orders in the store, then get the orders from the server
-      dispatch(getSingleOrderAction(_id)); // get the order with the id from the server
+      dispatch(getSingleOrder(_id));
     }
+    //otherwise, fetch from the server
   }, [dispatch, orders, _id]);
+
   const { cart } = selectedOrder;
   return (
     <div>
       {/* status */}
-      <div className="fw-bold py-2 d-flex  justify-content-between">
-        <div>
-          Order Status:
-          <span className="text-capitalize"> {selectedOrder.status}</span>
-        </div>
+      <div className="fw fw-bold py-2 d-flex justify-content-between">
+        <div>Status: {selectedOrder.status}</div>
         <div className="">
           <Form className="d-flex">
-            <Form.Group className="">
+            <Form.Group>
               <Form.Select>
-                <option value="">--Select Status--</option>
+                <option value="">-- Select --</option>
                 <option value="shipped">Shipped</option>
                 <option value="cancelled">Cancelled</option>
               </Form.Select>
             </Form.Group>
-            <Button variant="warning" type="submit">
-              {" "}
-              Update{" "}
-            </Button>
+            <Button variant="warning">Update</Button>
           </Form>
         </div>
       </div>
 
       {/* buyer info */}
-      <div className="shippingInfo mt-3">
-        <h4 className="fw-bold">Shipping Info</h4>
+      <div className="shippingInfo card mb-3 p-2   mt-3">
+        <h4>Shipping Details</h4>
         <hr />
         <p>
-          Order Date: 20-02-2022 <br />
-          Name: {selectedOrder?.buyer?.fName} <br />
-          Email: {selectedOrder?.buyer?.email} <br />
+          Order Date: 20-2-2022 <br />
+          Name: {selectedOrder?.buyer?.fName} {selectedOrder?.buyer?.lName}
+          <br />
           Phone: {selectedOrder?.buyer?.phone} <br />
-          Address: {selectedOrder?.shipping?.address}{" "}
-          {/* {selectedOrder?.shipping?.Suburb}, {selectedOrder?.shipping?.state},{" "}
+          Email: {selectedOrder?.buyer?.email}
+          <br />
+          Shipping Address: {selectedOrder?.shipping?.street}{" "}
+          {selectedOrder?.shipping?.Suburb}, {selectedOrder?.shipping?.state} ,{" "}
           {selectedOrder?.shipping?.postcode},{" "}
-          {selectedOrder?.shipping?.country}{" "} */}
+          {selectedOrder?.shipping?.countery} <br />
         </p>
       </div>
+
       {/* payment info */}
-      <div className="paymentInfo py-3">
-        <h4 className="fw-bold">Payment Info</h4>
+
+      <div className="payment-info card  p-3">
+        <h4>Payment Info</h4>
         <hr />
-        <p>
-          Payment Status: {selectedOrder?.paymentInfo?.status} <br />
-          Payment Amount: {selectedOrder?.paymentInfo?.paidAmount} <br />
-          Payment Method: {selectedOrder?.paymentInfo?.paymentMethod} <br />
-          Payment Transaction ID: {
-            selectedOrder?.paymentInfo?.transactionId
-          }{" "}
-        </p>
+        Status: {selectedOrder?.paymentInfo?.status}
+        <br />
+        Totle Paid: ${selectedOrder?.paymentInfo?.paidAmount}
+        <br />
+        Paid Date: {selectedOrder?.paymentInfo?.paidDate}
+        <br />
+        Method: {selectedOrder?.paymentInfo?.method}
+        <br />
+        Transaction ID: {selectedOrder?.paymentInfo?.transactionId}
+        <br />
       </div>
-      {/* Card info */}
-      <div className="cardInfo py-3">
-        <h4 className="fw-bold">Card Info</h4>
+
+      {/* cart info */}
+      <div className="card p-2 mt-3">
+        <h4>Cart details</h4>
         <hr />
+
         <Table striped bordered hover>
           <thead>
             <tr>
               <th>#</th>
               <th>Thumbnail</th>
-              <th>Product Name</th>
-              <th>Price</th>
-              <th>Quantity</th>
+              <th>Name</th>
+              <th>Unit Price</th>
+              <th>Qty</th>
               <th>Sub Total</th>
             </tr>
           </thead>
@@ -94,53 +97,59 @@ export const OrderEditForm = () => {
               <tr key={i}>
                 <td>{i + 1}</td>
                 <td>
-                  {" "}
-                  <img src={item?.thumbnail} alt="" width="50px" />
+                  <img src={item.thumbnail} alt="" width="100px" />
                 </td>
-                <td>{item?.productName}</td>
-                <td>{item?.salesPrice}</td>
-                <td>{item?.qty}</td>
-                <td>{item?.subTotal}</td>
+                <td>{item.productName}</td>
+                <td>{item.salesPrice}</td>
+                <td>{item.qty}</td>
+                <td>{item.subTotal}</td>
               </tr>
             ))}
-            <tr className="fw-bold">
-              <td colSpan="5">Total</td>
-              <td>${selectedOrder?.cartTotal}</td>
-
-              {/* <td>{cart.reduce((acc, item) => acc + item.subTotal, 0)}</td> */}
+            <tr className="fw-bolder">
+              <td colSpan={5}>Total </td>
+              <td>$ {selectedOrder.cartTotal}</td>
             </tr>
           </tbody>
         </Table>
       </div>
 
       {/* add note form */}
-      <Form className="p-3 card">
-        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-          <Form.Label className="fw-bold">Add Note</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            placeholder="Add Note"
-            style={{
-              caretColor: "red",
-            }}
-          />
+      <Form className="mt-5 card p-3">
+        <Form.Group className="mb-3">
+          <Form.Label>Add Note</Form.Label>
+          <Form.Control as="textarea" placeholder="add some note" rows={5} />
         </Form.Group>
-        <Button variant="warning" type="submit">
-          Add Note
-        </Button>
+        <Button variant="primary">Add Note</Button>
       </Form>
-      {/* message history */}
-      <div className="messageHistory mt-3">
-        {/* DATE */}
-        <h4 className="fw-bold">Date: 20-02-2022</h4>
-        <hr />
 
-        <div className="card p-3 ">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis
-          molestias, repellat vitae delectus quasi hic aliquid voluptatibus,
-          quod, aliquam nemo accusamus voluptatem dolores iste? Expedita libero
-          consequatur ut assumenda exercitationem!
+      {/* message history */}
+      <div className="mt-5">
+        <div className="note-history mt-3">
+          Date: 10-03-2020
+          <div className="card p-2">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio
+            veritatis quos voluptatibus quasi, omnis saepe ipsam labore? A,
+            sequi. Voluptatibus maiores molestias iste eaque nostrum aliquid rem
+            ratione laudantium temporibus.
+          </div>
+        </div>
+        <div className="note-history mt-3">
+          Date: 10-03-2020
+          <div className="card p-2">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio
+            veritatis quos voluptatibus quasi, omnis saepe ipsam labore? A,
+            sequi. Voluptatibus maiores molestias iste eaque nostrum aliquid rem
+            ratione laudantium temporibus.
+          </div>
+        </div>
+        <div className="note-history mt-3">
+          Date: 10-03-2020
+          <div className="card p-2">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio
+            veritatis quos voluptatibus quasi, omnis saepe ipsam labore? A,
+            sequi. Voluptatibus maiores molestias iste eaque nostrum aliquid rem
+            ratione laudantium temporibus.
+          </div>
         </div>
       </div>
     </div>

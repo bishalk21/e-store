@@ -12,26 +12,47 @@ const Dashboard = () => {
   const { productList } = useSelector((state) => state.products);
 
   useEffect(() => {
-    !productList.length && dispatch(getProductsAction());
-  }, [productList]);
+    dispatch(getProductsAction());
+  }, [dispatch]);
 
-  const clientTableHead = ["First Name", "Last Name", "joined date"];
-  const clientTableData = [
+  const clientTableHead = ["First Name", "Last Name", "joined Date"];
+  const clientInfo = [
     {
-      fName: "Bishal",
-      lName: "Karki",
-      joinedDate: "20-02-2022",
+      fName: "prem",
+      lName: "Acharya",
+      joinedAt: "30/10/2020",
+    },
+    {
+      fName: "prem",
+      lName: "Acharya",
+      joinedAt: "30/10/2020",
+    },
+    {
+      fName: "prem",
+      lName: "Acharya",
+      joinedAt: "30/10/2020",
+    },
+    {
+      fName: "prem",
+      lName: "Acharya",
+      joinedAt: "30/10/2020",
     },
   ];
-  const orderTableHead = [
+
+  const orderHead = [
     "Status",
-    "Product Name",
-    "Payment Status",
-    "Ordered Date",
-    "Total",
+    "payment Status",
+    "Name",
+    "ordered Date",
+    "Total Qty",
+    "Order Total",
   ];
-  const orderTableData = [
-    ["shipped", "Product Name", "Payment Status", "Ordered Date", "Total"],
+
+  const orderInfo = [
+    ["Pending", "paid", "Prem Acharya", "2-2-2022", 2, 888],
+    ["shipped", "paid", "Prem Acharya", "2-2-2022", 2, 33],
+    ["cancelled", "paid", "Prem Acharya", "2-2-2022", 2, 444],
+    ["Pending", "paid", "Prem Acharya", "2-2-2022", 2, 55],
   ];
 
   const activeProduct = productList.filter((item) => item.status === "active");
@@ -39,39 +60,43 @@ const Dashboard = () => {
     <AdminLayout>
       <h4>Dashboard</h4>
       <hr />
-      {/* products */}
-      <div className="products">
-        <h4 className="fw-bold">Products</h4>
+
+      {/* product summary */}
+      <div className="dashboard-product mt-3 py-3">
+        <h5>Product Summary</h5>
         <hr />
-        <Row className="g-4">
-          <Col md={4}>
-            <CustomCard count={productList.length} title=" Total Products" />
+        <Row className="g-3">
+          <Col md="4">
+            <CustomCard count={productList.length} title="Total Product" />
           </Col>
-          <Col md={4}>
+          <Col md="4">
             <CustomCard count={activeProduct.length} title="Active" />
           </Col>
-          <Col md={4}>
+          <Col md="4">
             <CustomCard
-              count={productList.length - activeProduct.length}
+              count={productList.length - activeProduct}
               title="Inactive"
             />
           </Col>
         </Row>
       </div>
-      {/* client summary */}
-      <div className="clientSummary py-3">
-        <h4 className="fw-bold">Clients Details</h4>
+      {/* last 5 orders */}
+      <div className="my-5">
+        <h5>New Clients</h5>
         <hr />
-        <CustomTable tableHead={clientTableHead} tableData={clientTableData} />
+        <CustomTable tabelHead={clientTableHead} tableData={clientInfo} />
       </div>
-      {/* order summary */}
-      <div className="clientSummary py-3">
-        <h4 className="fw-bold">Order Summary</h4>
-        <Link to="/orders" className="text-decoration-none">
-          <span className="text-primary">View All</span>
-        </Link>
+
+      {/* client summary */}
+      <div className="my-5">
+        <h5>
+          Recent orders{" "}
+          <Link to="/orders" className="text-decoration-none">
+            View all orders
+          </Link>
+        </h5>
         <hr />
-        <CustomTable tableHead={orderTableHead} tableData={orderTableData} />
+        <CustomTable tabelHead={orderHead} tableData={orderInfo} />
       </div>
     </AdminLayout>
   );

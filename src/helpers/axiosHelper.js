@@ -5,19 +5,14 @@ const categoryEP = rootUrl + "/category";
 const PMEP = rootUrl + "/payment-method";
 const productEP = rootUrl + "/product";
 const orderEP = rootUrl + "/order";
+const userEP = rootUrl + "/users";
+const reviewEP = rootUrl + "/reviews";
 
-const apiProcesser = async ({
-  method,
-  url,
-  data,
-  isPrivate,
-  token
-}) => {
+const apiProcesser = async ({ method, url, data, isPrivate, token }) => {
   try {
-    const headers = isPrivate ? {
-        Authorization: token || sessionStorage.getItem("accessJWT")
-      } :
-      null;
+    const headers = isPrivate
+      ? { Authorization: token || sessionStorage.getItem("accessJWT") }
+      : null;
 
     const response = await axios({
       method,
@@ -44,13 +39,7 @@ const apiProcesser = async ({
 
       const accessJWT = await getNewAccessJWT();
       if (accessJWT) {
-        return apiProcesser({
-          method,
-          url,
-          data,
-          isPrivate,
-          token
-        });
+        return apiProcesser({ method, url, data, isPrivate, token });
       }
     }
 
@@ -61,12 +50,14 @@ const apiProcesser = async ({
   }
 };
 
+// ===========admin user apis
 //post new admin user
 export const postUser = (data) => {
   const option = {
     method: "post",
     url: adminUserEP,
     data,
+    isPrivate: true,
   };
   return apiProcesser(option);
 };
@@ -91,7 +82,7 @@ export const loginAdminUser = (data) => {
   return apiProcesser(option);
 };
 
-//login  admin user
+//get  admin user
 export const getAdminUser = (token) => {
   const option = {
     method: "get",
@@ -101,42 +92,49 @@ export const getAdminUser = (token) => {
   };
   return apiProcesser(option);
 };
+//delete  admin user
+export const deleteAdminUser = (_id) => {
+  const option = {
+    method: "delete",
+    url: adminUserEP + "/" + _id,
+    isPrivate: true,
+  };
+  return apiProcesser(option);
+};
 
-// user update
+// update user profile
 export const updateAdminUser = (data) => {
   const option = {
     method: "put",
     url: adminUserEP,
-    data,
     isPrivate: true,
+    data,
   };
   return apiProcesser(option);
-}
+};
 
 // update user password
 export const updateAdminUserPassword = (data) => {
   const option = {
     method: "patch",
     url: adminUserEP,
-    data,
     isPrivate: true,
+    data,
   };
   return apiProcesser(option);
-}
+};
 
-
-// update request password otp 
-export const reqOtpResetAdminUserPassword = (data) => {
+// request otp for update user password
+export const requestOtpresetAdminUserPassword = (data) => {
   const option = {
     method: "post",
     url: adminUserEP + "/request-password-reset-otp",
     data,
   };
   return apiProcesser(option);
+};
 
-}
-
-// update reset password 
+// reset user password
 export const resetAdminUserPassword = (data) => {
   const option = {
     method: "patch",
@@ -144,8 +142,7 @@ export const resetAdminUserPassword = (data) => {
     data,
   };
   return apiProcesser(option);
-
-}
+};
 
 //fetch new accessJWT
 export const getNewAccessJWT = async () => {
@@ -156,13 +153,21 @@ export const getNewAccessJWT = async () => {
     isPrivate: true,
     token,
   };
-  const {
-    status,
-    accessJWT
-  } = await apiProcesser(option);
+  const { status, accessJWT } = await apiProcesser(option);
 
   status === "success" && sessionStorage.setItem("accessJWT", accessJWT);
   return accessJWT;
+};
+
+//fetch all admin users
+export const getAllAdminUsers = async () => {
+  const option = {
+    method: "get",
+    url: adminUserEP + "/all-admin",
+    isPrivate: true,
+  };
+
+  return apiProcesser(option);
 };
 
 // ========== category api calls
@@ -289,9 +294,8 @@ export const deleteProduct = (_id, data) => {
   return apiProcesser(option);
 };
 
-// ============ order apis
-
-export const fetchOrders = (_id) => {
+// ======== orders
+export const fetchorders = (_id) => {
   const url = _id ? orderEP + "/" + _id : orderEP;
   const option = {
     method: "get",
@@ -299,4 +303,26 @@ export const fetchOrders = (_id) => {
     isPrivate: true,
   };
   return apiProcesser(option);
-}
+};
+
+// ======== users
+export const fetchUsers = (_id) => {
+  const url = _id ? userEP + "/" + _id : userEP;
+  const option = {
+    method: "get",
+    url,
+    isPrivate: true,
+  };
+  return apiProcesser(option);
+};
+
+// ======== users
+export const fetchReviews = (_id) => {
+  const url = _id ? reviewEP + "/" + _id : reviewEP;
+  const option = {
+    method: "get",
+    url,
+    isPrivate: true,
+  };
+  return apiProcesser(option);
+};

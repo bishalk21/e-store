@@ -1,33 +1,28 @@
 import React, { useState } from "react";
 import { Alert, Container } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Footer } from "../../components/footer/Footer";
-// import { useSelector } from "react-redux";
 import { Header } from "../../components/header/Header";
-import { RequestOtp } from "../../components/reset-password/RequestOtp";
+import { RequestOTP } from "../../components/reset-password/RequestOTP";
 import { ResetPasswordForm } from "../../components/reset-password/ResetPasswordForm";
 import {
-  reqOtpResetAdminUserPassword,
+  requestOtpresetAdminUserPassword,
   resetAdminUserPassword,
 } from "../../helpers/axiosHelper";
 
-export const ResetPassword = () => {
+const ResetPassword = () => {
   const [passwordForm, setPasswordForm] = useState("otp");
   const [resp, setResp] = useState({});
   const [userEmail, setUserEmail] = useState("");
 
-  const handleOnOtpReq = async (email) => {
+  const handleOnOtpRequest = async (email) => {
     if (!email) {
-      setResp({ error: "Email is required" });
-      return;
+      return alert("No email received");
     }
-
     setUserEmail(email);
-
-    if (email) {
-      const response = await reqOtpResetAdminUserPassword({ email });
-      setResp(response);
-      response.status === "success" && setPasswordForm("password");
-    }
+    const response = await requestOtpresetAdminUserPassword({ email });
+    setResp(response);
+    response.status === "success" && setPasswordForm("password");
   };
 
   const handleOnPasswordUpdate = async (data) => {
@@ -37,20 +32,18 @@ export const ResetPassword = () => {
   };
 
   const form = {
-    otp: <RequestOtp handleOnOtpReq={handleOnOtpReq} />,
+    otp: <RequestOTP handleOnOtpRequest={handleOnOtpRequest} />,
     password: (
       <ResetPasswordForm handleOnPasswordUpdate={handleOnPasswordUpdate} />
     ),
   };
-
   return (
     <div>
       <Header />
       <Container className="py-5 page-main">
         {resp.message && (
           <Alert variant={resp.status === "success" ? "success" : "danger"}>
-            {" "}
-            {resp.message}{" "}
+            {resp.message}
           </Alert>
         )}
         <div className="pass-forms">{form[passwordForm]}</div>
@@ -59,3 +52,5 @@ export const ResetPassword = () => {
     </div>
   );
 };
+
+export default ResetPassword;

@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { CustomInputField } from "../../components/customInputField/CustomInputField";
 import { AdminLayout } from "../../components/layout/AdminLayout";
+import { CustomInputField } from "../../components/customInputField/CustomInputField";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  updateAdminUserAction,
-  updateAdminUserPasswordAction,
+  updateAdminPasswordAction,
+  updateAdminProfileAction,
 } from "../login/userAction";
 
-export const AdminProfile = () => {
+const AdminProfile = () => {
   const dispatch = useDispatch();
   const [form, setForm] = useState({});
   const [password, setPassword] = useState({});
   const [error, setError] = useState("");
+
   const { user } = useSelector((state) => state.admin);
 
   useEffect(() => {
@@ -21,54 +22,39 @@ export const AdminProfile = () => {
 
   const handleOnProfileUpdate = (e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+
+    setForm({
+      ...form,
+      [name]: value,
+    });
   };
 
   const handleOnProfileSubmit = (e) => {
     e.preventDefault();
+
     const { address, dob, fName, lName, phone, _id } = form;
-    dispatch(updateAdminUserAction({ address, dob, fName, lName, phone, _id }));
-    // console.log(form);
+    dispatch(
+      updateAdminProfileAction({ address, dob, fName, lName, phone, _id })
+    );
   };
 
   const handleOnPasswordUpdate = (e) => {
     const { newPassword } = password;
     const { name, value } = e.target;
-    console.log(value);
     setError("");
 
     if (name === "confirmPassword") {
-      // newPassword !== confirmPassword
-      newPassword !== value && setError("Password does not match");
+      newPassword !== value && setError("Password do not match");
 
-      //length check
-      newPassword.length < 6 &&
-        setError("Password must be at least 6 characters long");
-
-      // lowercase check
+      newPassword.length < 6 && setError("Password must be 6 character long!");
       !/[a-z]/.test(newPassword) &&
-        setError("Password must contain a lowercase letter");
-
-      // password must contain at least one special character
-      !/[!@#$%^&*]/.test(password) &&
-        setError("Password must contain a special character");
-      // password must not contain spaces
-      /\s/.test(password) && setError("Password must not contain spaces");
-      // password must not contain the email address
-      password.includes(form.email) &&
-        setError("Password must not contain the email address");
-      // password must not contain the user's first or last name
-      password.includes(form.fName) &&
-        setError("Password must not contain the user's first name");
-
-      // uppercase check
+        setError("Must have atleaset 1 lower case character!");
       !/[A-Z]/.test(newPassword) &&
-        setError("Password must contain an uppercase letter");
+        setError("Must have atleaset 1 uppder case character!");
+      !/[0-9]/.test(newPassword) &&
+        setError("New password must have atleaset 1 number!");
 
-      // number check
-      !/[0-9]/.test(newPassword) && setError("Password must contain a number");
-
-      !newPassword && setError("Please enter new password first");
+      !newPassword && setError("Password field must be provide");
     }
 
     setPassword({ ...password, [name]: value });
@@ -76,117 +62,123 @@ export const AdminProfile = () => {
 
   const handleOnPasswordSubmit = (e) => {
     e.preventDefault();
+
     const { newPassword, confirmPassword } = password;
 
-    if (!password.password || newPassword !== confirmPassword)
-      return alert("Either password or confirm password is empty");
+    if (!password.password || newPassword !== confirmPassword) {
+      return alert(
+        "Either current password field is empty or new password and confirm password do not match!"
+      );
+    }
 
-    updateAdminUserPasswordAction({
+    updateAdminPasswordAction({
       password: password.password,
       newPassword,
       _id: user._id,
     });
-    // console.log(password);
   };
 
   const inputFields = [
     {
-      label: "First Name",
-      type: "text",
       name: "fName",
       value: form.fName,
-      required: true,
+      label: "First Name",
+      type: "text",
+      placeholder: "Sam",
+      //   required: true,
     },
     {
-      label: "Last Name",
-      type: "text",
       name: "lName",
       value: form.lName,
+      label: "Last Name",
+      type: "text",
       required: true,
     },
     {
-      label: "Email",
-      type: "email",
       name: "email",
       value: form.email,
+      label: "Email",
+      type: "email",
       disabled: true,
       required: true,
     },
     {
-      label: "Phone",
-      type: "text",
       name: "phone",
       value: form.phone,
+      label: "Phone",
+      type: "text",
       required: true,
     },
     {
-      label: "Address",
-      type: "text",
       name: "address",
       value: form.address,
+      label: "Address",
+      type: "text",
     },
     {
-      label: "DOB",
-      type: "date",
       name: "dob",
       value: form.dob ? form.dob.slice(0, 10) : null,
+      label: "DOB",
+      type: "date",
     },
   ];
   return (
     <AdminLayout>
-      <div className="admin-profile mt-5">
-        <h2>Update your Profile</h2>
+      <div className="user-profile">
+        <h2>Update your profile</h2>
         <hr />
         <Form onSubmit={handleOnProfileSubmit}>
           {inputFields.map((input, i) => (
             <CustomInputField {...input} onChange={handleOnProfileUpdate} />
           ))}
-          <Button variant="warning" type="submit">
-            {" "}
-            Update{" "}
+          <Button type="submit" variant="warning">
+            Update Profile
           </Button>
         </Form>
       </div>
-      {/* password */}
+      <hr />
       <div className="mt-5 py-5">
-        <h2>Change Password</h2>
+        <h2>Update password</h2>
         <hr />
         <Form onSubmit={handleOnPasswordSubmit}>
           <CustomInputField
             onChange={handleOnPasswordUpdate}
-            label="Old Password"
-            type="password"
-            required={true}
             name="password"
+            type="password"
+            required={true}
+            label="Current Password"
           />
           <CustomInputField
             onChange={handleOnPasswordUpdate}
-            label="New Password"
-            type="password"
             name="newPassword"
+            type="password"
             required={true}
+            label="New Password"
           />
-          <p>
-            <small>
-              Password must be at least 8 characters long, contain at least one
-              number, one uppercase letter, one lowercase letter, and one
-              special character.
-            </small>
-          </p>
+          <Form.Group className="mb-3">
+            <Form.Text>
+              Password must contain lowercase, uppercase, number and atleast 6
+              charater long
+            </Form.Text>
+          </Form.Group>
+
           <CustomInputField
             onChange={handleOnPasswordUpdate}
-            label="Confirm Password"
-            type="password"
             name="confirmPassword"
+            type="password"
             required={true}
+            label="confirm Password"
           />
+
           {error && <Alert variant="danger">{error}</Alert>}
-          <Button variant="danger" type="submit" disable={error}>
-            {" "}
-            Update{" "}
+
+          <Button type="submit" variant="danger" disabled={error}>
+            Update Password
           </Button>
         </Form>
       </div>
     </AdminLayout>
   );
 };
+
+export default AdminProfile;
