@@ -2,21 +2,37 @@ import React, { useState } from 'react'
 import { MainLayout } from '../../components/MainLayout'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import {Alert } from "react-bootstrap"
 import { CustomInputField } from '../../components/customInputField';
+import { postNewAdminUser } from '../../helpers/axiosHelper';
 
 export const AdminRegistration = () => {
 
   const [form, setForm] = useState({});
+  const [response, setResponse] = useState({})
+  // const [response, setResponse] = useState({
+  //   status: "error",
+  //   message: "Something went wrong"
+  // });
 
   const handleOnChange = (e) => {
     const {name, value} = e.target;
     setForm({...form, [name]: value})
   }
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
-  }
+    // console.log(form);
+
+    // not sending confirmPassword to the server
+    const {confirmPassword, ...rest} = form;
+    if(confirmPassword !== rest.password) {
+      return alert("password do not match");
+    }
+
+    const result = await postNewAdminUser(rest);
+    setResponse(result);
+  } 
 
   const fields = [
     {
@@ -80,6 +96,14 @@ export const AdminRegistration = () => {
         <div className="form">
       <Form onSubmit={handleOnSubmit} >
       <h1>New Admin Registration</h1>
+
+    {
+      response.message && (<Alert variant={response.status === "success" ? "success" : "danger"} >
+        {response.message}
+      </Alert>
+)
+    }
+
       {/* <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control type="email" placeholder="Enter email" />
