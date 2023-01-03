@@ -1,0 +1,15 @@
+.page-main {
+    min-height: 75vh;
+}
+
+.form {
+    border: 1px solid rgba(47, 47, 84, 0.434);
+    padding: 1rem;
+    margin-top: 4rem;
+    border-radius: 10px;
+
+    box-shadow: -5px 5px 10px rgba(61, 61, 51, 0.513);
+    width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+}
