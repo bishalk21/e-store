@@ -4,6 +4,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom"
 import { AdminRegistration } from './pages/admin-registration/AdminRegistration';
 import { AdminLogin } from './pages/admin-login/AdminLogin';
 import EmailVerificationPage from './pages/admin-registration/EmailVerificationPage';
+  import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/admin/verify-email" element={<EmailVerificationPage />} />
       </Routes>
     </BrowserRouter>
+    <ToastContainer />
     </>
   );
 }

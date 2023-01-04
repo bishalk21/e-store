@@ -43,3 +43,13 @@ export const verifyAdminUser = (data) => {
     }
     return apiProcessor(option);
 }
+
+// login admin user
+export const loginAdminUser = (data) => {
+    const option = {
+        method: "post",
+        url: adminUserEp + "/login",
+        data
+    }
+    return apiProcessor(option);
+}
