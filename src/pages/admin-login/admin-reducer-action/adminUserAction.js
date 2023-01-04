@@ -9,10 +9,16 @@ export const loginUserAction = (data) => async (dispatch) => {
         pending: "please wait..."
     })
 
-   const {status, message, user} = await resultPromise;
+   const {status, message, user, accessJWT, refreshJWT} = await resultPromise;
 
 toast[status](message);
 
-status === "success" && dispatch(setAdminUser(user));
+if(status === "success") {
+    // accessJWT in sessionStorage
+    sessionStorage.setItem("accessJWT", accessJWT);
+    // refreshJWT in localStorage
+    localStorage.setItem("refreshJWT", refreshJWT);
+    dispatch(setAdminUser(user));
+} 
 
 }

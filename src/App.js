@@ -5,7 +5,7 @@ import { AdminRegistration } from './pages/admin-registration/AdminRegistration'
 import { AdminLogin } from './pages/admin-login/AdminLogin';
 import EmailVerificationPage from './pages/admin-registration/EmailVerificationPage';
   import { ToastContainer } from 'react-toastify';
-import { AdminDashboard } from './pages/admin-dashboard/AdminDashboard';
+import { AdminDashboard } from './pages/dashboard/AdminDashboard';
 
 function App() {
   return (
