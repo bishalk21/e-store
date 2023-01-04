@@ -1,15 +1,24 @@
-import React, { useRef, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import { MainLayout } from '../../components/MainLayout'
 import {Button, Container, Form} from 'react-bootstrap'
 import { CustomInputField } from '../../components/customInputField'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { loginUserAction } from './admin-reducer-action/adminUserAction'
+import { useNavigate } from 'react-router-dom'
 
 export const AdminLogin = () => {
 
   const [form, setForm] = useState({});
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // geting admin user from store
+  const {adminUsers} = useSelector((state) => state.adminUser);
+
+  useEffect(() => {
+    adminUsers._id && navigate("/dashboard");
+  }, [adminUsers, navigate])
 
   // useRef to access DOM node of component or access data of component
   // const emailRef = useRef();

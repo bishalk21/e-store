@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    adminUser: {},
+    adminUsers: {},
 }
 
 const adminUserSlice = createSlice({
-    name: 'adminUsert',
+    name: 'adminUser',
     initialState,
     reducers: {
         setAdminUser: (state, {payload}) => {
-            state.adminUser = payload;
+            state.adminUsers = payload;
         }
     }
 })
