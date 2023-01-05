@@ -13,6 +13,8 @@ function App() {
     <BrowserRouter>
       <Routes> 
       <Route path="/dashboard" element={<AdminDashboard />} />
+      <Route path="/product" element={<AdminDashboard />} />
+
         <Route path="/" element={<AdminLogin />} />
         <Route path="/register" element={<AdminRegistration />} />
         <Route path="/admin/verify-email" element={<EmailVerificationPage />} />
