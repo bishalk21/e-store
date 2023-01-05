@@ -1,14 +1,21 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setShowSideMenu } from "../../pages/system-state/systemStateSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { logoutUserAction } from "../../pages/admin-login/admin-reducer-action/adminUserAction";
 
 export const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { adminUsers } = useSelector((state) => state.adminUser);
   const handleShow = () => dispatch(setShowSideMenu(true));
+
+  const handleOnLogout = () => {
+    dispatch(logoutUserAction());
+    navigate("/");
+  };
 
   return (
     <Navbar collapseOnSelect bg="info" expand="md">
@@ -23,7 +30,7 @@ export const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             {adminUsers._id ? (
-              <Link className="nav-link" to="/logout">
+              <Link className="nav-link" to="/" onClick={handleOnLogout}>
                 Logout
               </Link>
             ) : (
