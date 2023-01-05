@@ -21,45 +21,45 @@ export const SideMenu = () => {
         <Offcanvas.Body>
           <ListGroup variant="flush" className="fs-5">
             <ListGroup.Item>
-              <Link to="/dashboard" className="nav-link">
+              <Link onClick={handleClose} to="/dashboard" className="nav-link">
                 <i class="fa-solid fa-home"></i> Dashboard
               </Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link to="/categories" className="nav-link">
+              <Link onClick={handleClose} to="/categories" className="nav-link">
                 <i class="fa-solid fa-list"></i> Categories
               </Link>
             </ListGroup.Item>
 
             <ListGroup.Item>
-              <Link to="/products" className="nav-link">
+              <Link onClick={handleClose} to="/products" className="nav-link">
                 <i class="fa-solid fa-box"></i> Products
               </Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link to="/payment" className="nav-link">
+              <Link onClick={handleClose} to="/payment" className="nav-link">
                 {/* Payment Methods */}
                 <i class="fa-solid fa-credit-card"></i> Payment Methods
               </Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link to="/users" className="nav-link">
+              <Link onClick={handleClose} to="/users" className="nav-link">
                 <i class="fa-solid fa-users"></i> Users
               </Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link to="/orders" className="nav-link">
+              <Link onClick={handleClose} to="/orders" className="nav-link">
                 <i class="fa-solid fa-shopping-cart"></i> Orders
               </Link>
               {/* orders */}
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link to="/reviews" className="nav-link">
+              <Link onClick={handleClose} to="/reviews" className="nav-link">
                 <i class="fa-solid fa-star"></i> Reviews
               </Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link to="/settings" className="nav-link">
+              <Link onClick={handleClose} to="/settings" className="nav-link">
                 <i class="fa-solid fa-cog"></i> Settings
               </Link>
             </ListGroup.Item>
