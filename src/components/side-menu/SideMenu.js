@@ -26,7 +26,7 @@ export const SideMenu = () => {
               </Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link onClick={handleClose} to="/categories" className="nav-link">
+              <Link onClick={handleClose} to="/category" className="nav-link">
                 <i class="fa-solid fa-list"></i> Categories
               </Link>
             </ListGroup.Item>
