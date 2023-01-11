@@ -9,6 +9,9 @@ const adminUserEp = rootUrl + "/admin-user";
 // categories EP
 const categoriesEp = rootUrl + "/category";
 
+// payment method EP
+const paymentMethodEp = rootUrl + "/payment-method";
+
 const apiProcessor = async ({ method, url, data, isPrivate, token }) => {
   try {
     // if isPrivate is true then add token to the header
@@ -157,6 +160,17 @@ export const deleteCategories = (_id) => {
   const option = {
     method: "delete",
     url: categoriesEp + "/" + _id,
+    isPrivate: true,
+  };
+  return apiProcessor(option);
+};
+
+// ============== payment method
+// fetch payment method
+export const fetchPaymentMethod = () => {
+  const option = {
+    method: "get",
+    url: paymentMethodEp,
     isPrivate: true,
   };
   return apiProcessor(option);
