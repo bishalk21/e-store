@@ -9,11 +9,11 @@ const adminUserEp = rootUrl + "/admin-user";
 // categories EP
 const categoriesEp = rootUrl + "/category";
 
-const apiProcessor = async ({ method, url, data, isPrivate }) => {
+const apiProcessor = async ({ method, url, data, isPrivate, token }) => {
   try {
     // if isPrivate is true then add token to the header
     const headers = isPrivate
-      ? { Authorization: sessionStorage.getItem("accessJWT") }
+      ? { Authorization: token || sessionStorage.getItem("accessJWT") }
       : null;
 
     const response = await axios({
@@ -26,11 +26,54 @@ const apiProcessor = async ({ method, url, data, isPrivate }) => {
   } catch (error) {
     // console.log(error)
 
+    let message = error.message;
+
+    // if error is 401 then fetch new accessJWT
+    if (error.response && error.response?.status === 401) {
+      sessionStorage.removeItem("accessJWT");
+      localStorage.removeItem("refreshJWT");
+    }
+
+    // if error.response.data
+    if (error.response && error.response.data) {
+      message = error.response.data.message;
+    }
+
+    // if jwt expired
+    if (message === "jwt expired") {
+      // call the api to get new access jwt and store in session and call the api processor
+      const accessJWT = await fetchNewAccessJWT();
+
+      if (accessJWT) {
+        return await apiProcessor({
+          method,
+          url,
+          data,
+          isPrivate,
+          token: accessJWT,
+        });
+      }
+    }
+
     return {
       status: "error",
-      message: error.message,
+      message,
     };
   }
+};
+
+// fetch new accessjwt
+export const fetchNewAccessJWT = async () => {
+  const option = {
+    method: "get",
+    url: adminUserEp + "/accessjwt",
+    isPrivate: true,
+    token: localStorage.getItem("refreshJWT"),
+  };
+  const { status, accessJWT } = await apiProcessor(option);
+
+  status === "success" && sessionStorage.setItem("accessJWT", accessJWT);
+  return accessJWT;
 };
 
 // ================ admin user

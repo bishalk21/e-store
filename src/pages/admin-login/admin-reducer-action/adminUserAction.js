@@ -1,5 +1,9 @@
 import { toast } from "react-toastify";
-import { getAdminUser, loginAdminUser } from "../../../helpers/axiosHelper";
+import {
+  fetchNewAccessJWT,
+  getAdminUser,
+  loginAdminUser,
+} from "../../../helpers/axiosHelper";
 import { setAdminUser } from "./adminUserSlice";
 
 export const loginUserAction = (data) => async (dispatch) => {
@@ -30,8 +34,8 @@ export const logoutUserAction = () => (dispatch) => {
 };
 
 // fetch user and mount in the redux store
-export const getAdminUserAction = () => async (dispatch) => {
-  const { status, message, user } = await getAdminUser();
+export const getAdminUserAction = (token) => async (dispatch) => {
+  const { status, user } = await getAdminUser(token);
 
   status === "success" && dispatch(setAdminUser(user));
 };
@@ -46,6 +50,9 @@ export const autoLogin = () => async (dispatch) => {
   }
   // 2. if refreshJWT exist, fetch new accessJWT and fetch user using the newly fetch accessJWT
   else if (refreshJWT) {
+    const token = await fetchNewAccessJWT();
+
+    token ? dispatch(getAdminUserAction(token)) : dispatch(logoutUserAction());
   } else {
     dispatch(logoutUserAction());
   }
