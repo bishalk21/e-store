@@ -33,6 +33,19 @@ const apiProcessor = async ({ method, url, data, isPrivate }) => {
   }
 };
 
+// ================ admin user
+
+// get admin user
+export const getAdminUser = (data) => {
+  const option = {
+    method: "get",
+    url: adminUserEp,
+    data,
+    isPrivate: true,
+  };
+  return apiProcessor(option);
+};
+
 // post new admin user
 export const postNewAdminUser = (data) => {
   const option = {

@@ -3,7 +3,10 @@ import { MainLayout } from "../../components/main-layout/MainLayout";
 import { Button, Container, Form } from "react-bootstrap";
 import { CustomInputField } from "../../components/custom-input-field/customInputField";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUserAction } from "./admin-reducer-action/adminUserAction";
+import {
+  autoLogin,
+  loginUserAction,
+} from "./admin-reducer-action/adminUserAction";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const AdminLogin = () => {
@@ -22,8 +25,9 @@ export const AdminLogin = () => {
     "/dashboard";
 
   useEffect(() => {
-    adminUsers._id && navigate(origin);
-  }, [adminUsers, navigate]);
+    // adminUsers._id && navigate(origin);
+    adminUsers._id ? navigate(origin) : dispatch(autoLogin());
+  }, [adminUsers, navigate, dispatch]);
 
   // useRef to access DOM node of component or access data of component
   // const emailRef = useRef();
