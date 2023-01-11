@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  postCategoriesAction,
-  updateCategoriesAction,
-} from "../../../pages/categories/category-reducer/categoryAction";
+import { updateCategoriesAction } from "../../../pages/categories/category-reducer/categoryAction";
 import ContentModal from "../../modal/contentModal";
 
 const initialState = {
