@@ -175,3 +175,14 @@ export const fetchPaymentMethod = () => {
   };
   return apiProcessor(option);
 };
+
+// post payment method
+export const postPaymentMethod = (data) => {
+  const option = {
+    method: "post",
+    url: paymentMethodEp,
+    isPrivate: true,
+    data,
+  };
+  return apiProcessor(option);
+};
