@@ -12,6 +12,9 @@ const categoriesEp = rootUrl + "/category";
 // payment method EP
 const paymentMethodEp = rootUrl + "/payment-method";
 
+// products EP
+const productsEp = rootUrl + "/product";
+
 const apiProcessor = async ({ method, url, data, isPrivate, token }) => {
   try {
     // if isPrivate is true then add token to the header
@@ -204,6 +207,17 @@ export const updatePaymentMethod = (data) => {
     url: paymentMethodEp,
     isPrivate: true,
     data,
+  };
+  return apiProcessor(option);
+};
+
+// ========================== products api
+// fetch product
+export const fetchProduct = () => {
+  const option = {
+    method: "get",
+    url: productsEp,
+    isPrivate: true,
   };
   return apiProcessor(option);
 };

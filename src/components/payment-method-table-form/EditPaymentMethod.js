@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  postPaymentMehodAction,
-  updatePaymentMethodAction,
-} from "../../pages/payment-method/payment-method-action-slice/paymentMethodAction";
+import { updatePaymentMethodAction } from "../../pages/payment-method/payment-method-action-slice/paymentMethodAction";
 import { CustomInputField } from "../custom-input-field/customInputField";
 import ContentModal from "../modal/contentModal";
 

@@ -9,6 +9,8 @@ import { Product } from "./pages/products/Product";
 import { PrivateRouter } from "./components/private-router/PrivateRouter";
 import { Category } from "./pages/categories/Category";
 import { PaymentMethod } from "./pages/payment-method/PaymentMethod";
+import { AddNewProduct } from "./components/products/AddNewProduct";
+import { EditProduct } from "./components/products/EditProduct";
 
 function App() {
   return (
@@ -31,6 +33,25 @@ function App() {
               </PrivateRouter>
             }
           />
+
+          <Route
+            path="/product/new"
+            element={
+              <PrivateRouter>
+                <AddNewProduct />
+              </PrivateRouter>
+            }
+          />
+
+          <Route
+            path="/product/edit/:_id"
+            element={
+              <PrivateRouter>
+                <EditProduct />
+              </PrivateRouter>
+            }
+          />
+
           <Route
             path="/category"
             element={
