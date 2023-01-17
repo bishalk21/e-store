@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { MainLayout } from "../../components/main-layout/MainLayout";
-import { ProductTable } from "../../components/products/productTable";
+import { ProductTable } from "../../components/products/product-form-table/productTable";
 
 export const Product = () => {
   return (

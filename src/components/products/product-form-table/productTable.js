@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getProductAction } from "../../pages/products/product-slice-action/productAction";
+import { getProductAction } from "../../../pages/products/product-slice-action/productAction";
 
 export const ProductTable = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export const ProductTable = () => {
 
   useEffect(() => {
     dispatch(getProductAction());
-  }, []);
+  }, [dispatch]);
   return (
     <>
       <Table striped bordered hover>
@@ -37,7 +37,9 @@ export const ProductTable = () => {
                 <td>{item.price}</td>
                 <td>{item.salesPrice}</td>
                 <td>
-                  {item.salesStartDate} - {item.salesEndDate}
+                  {item.salesStartDate && item.salesStartDate.substr(0, 10)}{" "}
+                  {item.salesStartDate ? "to " : "-"}
+                  {item.salesEndDate && item.salesEndDate.substr(0, 10)}
                 </td>
                 <td>
                   <Link to={`/product/edit/${item._id}`}>

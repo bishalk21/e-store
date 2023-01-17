@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { MainLayout } from "../main-layout/MainLayout";
+import { AddProductForm } from "./product-form-table/AddProductForm";
 
 export const AddNewProduct = () => {
   return (
@@ -16,7 +17,9 @@ export const AddNewProduct = () => {
         </div>
         <h1>Add New Product</h1>
         <hr />
-        <div></div>
+        <div>
+          <AddProductForm />
+        </div>
       </Container>
     </MainLayout>
   );

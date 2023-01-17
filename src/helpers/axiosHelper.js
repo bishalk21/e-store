@@ -221,3 +221,14 @@ export const fetchProduct = () => {
   };
   return apiProcessor(option);
 };
+
+// post product
+export const postProduct = (data) => {
+  const option = {
+    method: "post",
+    url: productsEp,
+    isPrivate: true,
+    data,
+  };
+  return apiProcessor(option);
+};
