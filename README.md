@@ -50,3 +50,8 @@ The purpose of using JWT is not to hide data but to ensure the authenticity of t
 
 - check if accessJWT exist, fetch user and mount user in our redux store
 - if refreshJWT exist, fetch new accessJWT and fetch user using the newly fetch accessJWT
+
+# multer
+
+Multer is a node. js middleware for handling multipart/form-data , which is primarily used for uploading files.
+Multer will not process any form which is not multipart ( multipart/form-data ).

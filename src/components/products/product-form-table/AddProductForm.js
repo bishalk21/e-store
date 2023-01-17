@@ -21,11 +21,18 @@ const initialState = {
 export const AddProductForm = () => {
   const [form, setForm] = useState(initialState);
   const dispatch = useDispatch();
+  const [images, setImages] = useState([]);
   const { categories } = useSelector((state) => state.category);
 
   useEffect(() => {
     !categories.length && dispatch(fetchCategoriesAction());
   }, [categories, dispatch]);
+
+  const handleOnImageSelect = (e) => {
+    const { files } = e.target;
+    // console.log(files);
+    setImages(files);
+  };
 
   const inputFields = [
     {
@@ -59,6 +66,7 @@ export const AddProductForm = () => {
       type: "number",
       placeholder: "342",
       required: true,
+      min: 1,
     },
     {
       name: "salesPrice",
@@ -93,6 +101,8 @@ export const AddProductForm = () => {
       name: "images",
       type: "file",
       accept: "image/*",
+      onChange: handleOnImageSelect,
+      multiple: true,
     },
   ];
 
@@ -109,7 +119,19 @@ export const AddProductForm = () => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(postProductAction(form));
+    // set data with FormData
+    const formData = new FormData();
+
+    //append form data
+    for (const key in form) {
+      formData.append(key, form[key]);
+    }
+
+    // append images
+    images.length &&
+      [...images].map((image) => formData.append("images", image));
+
+    dispatch(postProductAction(formData));
   };
 
   return (
@@ -131,7 +153,7 @@ export const AddProductForm = () => {
             <option value=""> Select Parent Category</option>
             {categories.length > 0 &&
               categories.map(
-                (item) =>
+                (item, i) =>
                   item.parentCatId && (
                     <option value={item._id}>{item.name}</option>
                   )
@@ -141,7 +163,13 @@ export const AddProductForm = () => {
 
         {inputFields.map((item, i) => {
           return (
-            <CustomInputField key={i} {...item} onChange={handleOnChange} />
+            <CustomInputField
+              key={i}
+              {...item}
+              onChange={
+                item.name === "images" ? handleOnImageSelect : handleOnChange
+              }
+            />
           );
         })}
 
