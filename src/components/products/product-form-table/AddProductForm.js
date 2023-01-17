@@ -153,7 +153,7 @@ export const AddProductForm = () => {
             <option value=""> Select Parent Category</option>
             {categories.length > 0 &&
               categories.map(
-                (item, i) =>
+                (item) =>
                   item.parentCatId && (
                     <option value={item._id}>{item.name}</option>
                   )

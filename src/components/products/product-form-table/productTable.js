@@ -18,6 +18,7 @@ export const ProductTable = () => {
         <thead>
           <tr>
             <th>#</th>
+            <th>Thumbnail</th>
             <th>Status</th>
             <th>Quantity</th>
             <th>Price</th>
@@ -31,6 +32,14 @@ export const ProductTable = () => {
             return (
               <tr key={i}>
                 <td>{i + 1}</td>
+                <td>
+                  <img
+                    src={"http://localhost:8000/" + item.thumbnail}
+                    alt=""
+                    width="60px"
+                    crossOrigin="anonymous"
+                  />
+                </td>
                 <td>{item.status}</td>
                 <td>{item.name}</td>
                 <td>{item.quantity}</td>

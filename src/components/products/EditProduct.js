@@ -1,9 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import {
+  deleteProductAction,
+  getSingleProductAction,
+} from "../../pages/products/product-slice-action/productAction";
 import { MainLayout } from "../main-layout/MainLayout";
 
 export const EditProduct = () => {
+  const dispatch = useDispatch();
+  const { _id } = useParams();
+
+  const { selectedProduct } = useSelector((state) => state.products);
+
+  useEffect(() => {
+    _id && dispatch(getSingleProductAction(_id));
+  }, [_id, dispatch]);
+
+  const handleOnDelete = () => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      const { thumbnail, images } = selectedProduct;
+      const imgs = [thumbnail, ...images];
+
+      deleteProductAction(_id, [...new Set(imgs)]);
+    }
+  };
+
   return (
     <MainLayout>
       <Container>
@@ -14,9 +37,14 @@ export const EditProduct = () => {
             </Button>
           </Link>
         </div>
-        <h1>Add New Product</h1>
+        <h1>Update Product</h1>
         <hr />
-        <div></div>
+        <div className="edit-form">Edit Form Goes here</div>
+        <div className="text-end py-3">
+          <Button variant="danger" onClick={handleOnDelete}>
+            Delete Product
+          </Button>
+        </div>
       </Container>
     </MainLayout>
   );

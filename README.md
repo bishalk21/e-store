@@ -55,3 +55,14 @@ The purpose of using JWT is not to hide data but to ensure the authenticity of t
 
 Multer is a node. js middleware for handling multipart/form-data , which is primarily used for uploading files.
 Multer will not process any form which is not multipart ( multipart/form-data ).
+
+**key:** In order to serve static content from server,
+
+- we have to convert the folder into static serving folder
+- in req.body(`public/folder/images`), we automatically redirected to this folder and serve the images.
+
+## useParams:
+
+The `useParams` hook returns an object of `key/value` pairs of the dynamic params from the current URL that were matched by the `<Route path>`. Child routes inherit all params from their parent routes.
+
+The useParams hook is one of the several hooks in React router. It has been available in React router since version 5. You can use it to retrieve route parameters from the component rendered by the matching route.
