@@ -235,6 +235,17 @@ export const postProduct = (data) => {
   return apiProcessor(option);
 };
 
+// post product
+export const updateProduct = (data) => {
+  const option = {
+    method: "put",
+    url: productsEp,
+    isPrivate: true,
+    data,
+  };
+  return apiProcessor(option);
+};
+
 // delete product
 export const deleteProduct = (_id, data) => {
   const option = {

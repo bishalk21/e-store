@@ -7,6 +7,7 @@ import {
   getSingleProductAction,
 } from "../../pages/products/product-slice-action/productAction";
 import { MainLayout } from "../main-layout/MainLayout";
+import { EditProductForm } from "./product-form-table/EditProductForm";
 
 export const EditProduct = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,9 @@ export const EditProduct = () => {
         </div>
         <h1>Update Product</h1>
         <hr />
-        <div className="edit-form">Edit Form Goes here</div>
+        <div className="edit-form">
+          <EditProductForm />
+        </div>
         <div className="text-end py-3">
           <Button variant="danger" onClick={handleOnDelete}>
             Delete Product
