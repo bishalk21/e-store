@@ -11,6 +11,7 @@ import { Category } from "./pages/categories/Category";
 import { PaymentMethod } from "./pages/payment-method/PaymentMethod";
 import { AddNewProduct } from "./components/products/AddNewProduct";
 import { EditProduct } from "./components/products/EditProduct";
+import { AdminProfile } from "./pages/admin-profile/AdminProfile";
 
 function App() {
   return (
@@ -66,6 +67,15 @@ function App() {
             element={
               <PrivateRouter>
                 <PaymentMethod />
+              </PrivateRouter>
+            }
+          />
+
+          <Route
+            path="/admin-profile"
+            element={
+              <PrivateRouter>
+                <AdminProfile />
               </PrivateRouter>
             }
           />

@@ -125,6 +125,28 @@ export const loginAdminUser = (data) => {
   return apiProcessor(option);
 };
 
+//update admin user profile
+export const updateAdminUserProfile = (data) => {
+  const option = {
+    method: "put",
+    url: adminUserEp,
+    isPrivate: true,
+    data,
+  };
+  return apiProcessor(option);
+};
+
+//update admin user password
+export const updateAdminUserPassword = (data) => {
+  const option = {
+    method: "patch",
+    url: adminUserEp,
+    isPrivate: true,
+    data,
+  };
+  return apiProcessor(option);
+};
+
 // ================ categories
 // fetch categories
 export const fetchCategories = (_id) => {
