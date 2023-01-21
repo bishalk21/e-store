@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   showSideMenu: false,
   modalShow: false,
+  // passwordForm: "otp",
 };
 
 const systemStateSlice = createSlice({
@@ -15,9 +16,12 @@ const systemStateSlice = createSlice({
     setModalShow: (state) => {
       state.modalShow = !state.modalShow;
     },
+    // setPasswordForm: (state, { payload }) => {
+    //   state.passwordForm = payload;
+    // },
   },
 });
 
 const { reducer, actions } = systemStateSlice;
-export const { setShowSideMenu, setModalShow } = actions;
+export const { setShowSideMenu, setModalShow } = actions; // setPasswordForm
 export default reducer;

@@ -147,6 +147,16 @@ export const updateAdminUserPassword = (data) => {
   return apiProcessor(option);
 };
 
+// reset password admin user
+export const resetAdminUserPassword = (data) => {
+  const option = {
+    method: "post",
+    url: adminUserEp + "/req-password-reset-otp",
+    data,
+  };
+  return apiProcessor(option);
+};
+
 // ================ categories
 // fetch categories
 export const fetchCategories = (_id) => {

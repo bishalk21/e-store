@@ -7,7 +7,7 @@ import {
   autoLogin,
   loginUserAction,
 } from "./admin-reducer-action/adminUserAction";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const AdminLogin = () => {
   const [form, setForm] = useState({});
@@ -27,7 +27,7 @@ export const AdminLogin = () => {
   useEffect(() => {
     // adminUsers._id && navigate(origin);
     adminUsers._id ? navigate(origin) : dispatch(autoLogin());
-  }, [adminUsers, navigate, dispatch]);
+  }, [adminUsers, origin, navigate, dispatch]);
 
   // useRef to access DOM node of component or access data of component
   // const emailRef = useRef();
@@ -75,6 +75,10 @@ export const AdminLogin = () => {
                 Login
               </Button>
             </Form>
+
+            <div className="text-end">
+              Forgot <Link to="/reset-password"> Password?</Link>
+            </div>
           </div>
         </Container>
       </MainLayout>

@@ -12,6 +12,7 @@ import { PaymentMethod } from "./pages/payment-method/PaymentMethod";
 import { AddNewProduct } from "./components/products/AddNewProduct";
 import { EditProduct } from "./components/products/EditProduct";
 import { AdminProfile } from "./pages/admin-profile/AdminProfile";
+import { AdminResetPassword } from "./pages/admin-login/reset-password/AdminResetPassword";
 
 function App() {
   return (
@@ -83,6 +84,7 @@ function App() {
           <Route path="/" element={<AdminLogin />} />
           <Route path="/login" element={<AdminLogin />} />
           <Route path="/register" element={<AdminRegistration />} />
+          <Route path="/reset-password" element={<AdminResetPassword />} />
           <Route
             path="/admin/verify-email"
             element={<EmailVerificationPage />}
