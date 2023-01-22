@@ -37,7 +37,10 @@ export const ResetPassword = ({ handleOnPasswordReset }) => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    handleOnPasswordReset(form);
+
+    const { confirmPassword, ...rest } = form;
+
+    handleOnPasswordReset(rest);
   };
 
   return (
@@ -83,6 +86,12 @@ export const ResetPassword = ({ handleOnPasswordReset }) => {
             Update Password
           </Button>
         </Form.Group>
+
+        <div className="text-end mt-3">
+          <a href="/reset-password">
+            <Button variant="info">Request OTP</Button>
+          </a>
+        </div>
       </Form>
     </div>
   );

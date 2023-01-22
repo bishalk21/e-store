@@ -4,11 +4,15 @@ import { Alert, Container } from "react-bootstrap";
 import { MainLayout } from "../../../components/main-layout/MainLayout";
 import { RequestOtp } from "../../../components/password-reset/RequestOtp";
 import { ResetPassword } from "../../../components/password-reset/ResetPassword";
-import { resetAdminUserPassword } from "../../../helpers/axiosHelper";
+import {
+  requestOtpAdminUserPassword,
+  resetAdminUserPassword,
+} from "../../../helpers/axiosHelper";
 
 export const AdminResetPassword = () => {
   const [passwordForm, setPasswordForm] = useState("otp");
   const [resp, setResp] = useState({});
+  const [userEmail, setUserEmail] = useState("");
 
   // const showForm = "otp"; // password
   //   const { passwordForm } = useSelector((state) => state.systemState);
@@ -18,14 +22,17 @@ export const AdminResetPassword = () => {
       return alert("No email received");
     }
 
-    const response = await resetAdminUserPassword({ email });
+    setUserEmail(email);
+    const response = await requestOtpAdminUserPassword({ email });
 
     setResp(response);
     response.status === "success" && setPasswordForm("password");
   };
 
-  const handleOnPasswordReset = (e) => {
-    e.preventDefault();
+  const handleOnPasswordReset = async (data) => {
+    data.email = userEmail;
+    const response = await resetAdminUserPassword(data);
+    setResp(response);
   };
 
   const form = {
