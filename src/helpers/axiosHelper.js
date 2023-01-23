@@ -15,6 +15,9 @@ const paymentMethodEp = rootUrl + "/payment-method";
 // products EP
 const productsEp = rootUrl + "/product";
 
+// orders EP
+const ordersEp = rootUrl + "/order";
+
 const apiProcessor = async ({ method, url, data, isPrivate, token }) => {
   try {
     // if isPrivate is true then add token to the header
@@ -295,6 +298,18 @@ export const deleteProduct = (_id, data) => {
     url: productsEp + "/" + _id,
     isPrivate: true,
     data,
+  };
+  return apiProcessor(option);
+};
+
+// =============== orders api
+// get orders
+export const fetchOrders = (_id) => {
+  const url = _id ? ordersEp + "/" + _id : ordersEp;
+  const option = {
+    method: "get",
+    url: url,
+    isPrivate: true,
   };
   return apiProcessor(option);
 };
