@@ -12,12 +12,13 @@ const orderSlice = createSlice({
     setOrders: (state, { payload }) => {
       state.orders = payload;
     },
-    setSelectedOrders: (state, { payload }) => {
+    setSelectedOrders: (state, { payload = {} }) => {
+      // if we dont have anything, add empty array
       state.selectedOrder = payload;
     },
   },
 });
 
 const { reducer, actions } = orderSlice;
-export const { setOrders, setSelectedOrder } = actions;
+export const { setOrders, setSelectedOrders } = actions;
 export default reducer;

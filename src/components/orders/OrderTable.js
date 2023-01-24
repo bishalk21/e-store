@@ -28,7 +28,7 @@ export const OrderTable = () => {
         </thead>
         <tbody>
           {orders.map((item, i) => (
-            <tr>
+            <tr key={i}>
               <td>{i + 1}</td>
               <td>{item.status}</td>
               <td>
@@ -37,7 +37,7 @@ export const OrderTable = () => {
               <td>{item.totalAmount}</td>
               <td>{item?.paymentInfo?.status}</td>
               <td>
-                <Link to={`/order/${item?._id}`}>
+                <Link to={`/orders/${item?._id}`}>
                   <Button variant="info">View details</Button>
                 </Link>
               </td>

@@ -27,7 +27,7 @@ export const AdminLogin = () => {
   useEffect(() => {
     // adminUsers._id && navigate(origin);
     adminUsers._id ? navigate(origin) : dispatch(autoLogin());
-  }, [adminUsers, origin, navigate, dispatch]);
+  }, [navigate, dispatch, origin, adminUsers._id]);
 
   // useRef to access DOM node of component or access data of component
   // const emailRef = useRef();
