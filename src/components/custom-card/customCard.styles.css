@@ -1,0 +1,21 @@
+.card {
+  background: linear-gradient(to right, pink, lightblue);
+}
+
+.card-body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 3rem;
+  border: 6px double yellowgreen;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
