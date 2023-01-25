@@ -15,6 +15,8 @@ import { AdminProfile } from "./pages/admin-profile/AdminProfile";
 import { AdminResetPassword } from "./pages/admin-login/reset-password/AdminResetPassword";
 import { Orders } from "./pages/orders/Orders";
 import { OrderDetails } from "./pages/orders/OrderDetails";
+import { Reviews } from "./pages/reviews/Reviews";
+import { Users } from "./pages/users/Users";
 
 function App() {
   return (
@@ -97,6 +99,24 @@ function App() {
             element={
               <PrivateRouter>
                 <OrderDetails />
+              </PrivateRouter>
+            }
+          />
+
+          <Route
+            path="/reviews"
+            element={
+              <PrivateRouter>
+                <Reviews />
+              </PrivateRouter>
+            }
+          />
+
+          <Route
+            path="/users"
+            element={
+              <PrivateRouter>
+                <Users />
               </PrivateRouter>
             }
           />

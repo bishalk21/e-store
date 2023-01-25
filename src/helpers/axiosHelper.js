@@ -18,6 +18,12 @@ const productsEp = rootUrl + "/product";
 // orders EP
 const ordersEp = rootUrl + "/order";
 
+// reviews EP
+const reviewsEp = rootUrl + "/reviews";
+
+// users EP
+const usersEp = rootUrl + "/users";
+
 const apiProcessor = async ({ method, url, data, isPrivate, token }) => {
   try {
     // if isPrivate is true then add token to the header
@@ -309,6 +315,30 @@ export const fetchOrders = (_id) => {
   const option = {
     method: "get",
     url: url,
+    isPrivate: true,
+  };
+  return apiProcessor(option);
+};
+
+// ============= users
+// fetch users
+export const fetchUsers = (_id) => {
+  const url = _id ? usersEp + "/" + _id : usersEp;
+  const option = {
+    method: "get",
+    url,
+    isPrivate: true,
+  };
+  return apiProcessor(option);
+};
+
+// ============= reviews
+// fetch reviews
+export const fetchReviews = (_id) => {
+  const url = _id ? reviewsEp + "/" + _id : reviewsEp;
+  const option = {
+    method: "get",
+    url,
     isPrivate: true,
   };
   return apiProcessor(option);
