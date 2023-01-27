@@ -2,7 +2,7 @@ import { fetchOrders } from "../../../helpers/axiosHelper";
 import { setOrders, setSelectedOrders } from "./orderSlice";
 
 export const getOrdersAction = () => async (dispatch) => {
-  const { status, orders } = await fetchOrders();
+  const {    orders } = await fetchOrders();
   dispatch(setOrders(orders));
 };
 
