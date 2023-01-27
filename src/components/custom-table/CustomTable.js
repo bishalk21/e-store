@@ -4,7 +4,7 @@ import { Table } from "react-bootstrap";
 export const CustomTable = ({ tableHead = [], tableData = [] }) => {
   return (
     <>
-      <Table stripped hovered bordered>
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th># </th>
@@ -18,7 +18,7 @@ export const CustomTable = ({ tableHead = [], tableData = [] }) => {
             <tr key={i}>
               <td>{i + 1}</td>
               {Object.keys(data).map((key, j) => (
-                <td>{data[key]}</td>
+                <td key={j}>{data[key]}</td>
               ))}
             </tr>
           ))}

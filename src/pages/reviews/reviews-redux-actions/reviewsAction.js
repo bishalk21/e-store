@@ -1,4 +1,4 @@
-import { fetchReviews, fetchUsers } from "../../../helpers/axiosHelper";
+import { fetchReviews } from "../../../helpers/axiosHelper";
 import { setReviews } from "./reviewsSlice";
 
 export const fetchReviewsAction = () => async (dispatch) => {

@@ -1,12 +1,14 @@
 import { toast } from "react-toastify";
 import {
+  deleteAdminUser,
   fetchNewAccessJWT,
   getAdminUser,
+  getAllAdminUser,
   loginAdminUser,
   updateAdminUserPassword,
   updateAdminUserProfile,
 } from "../../../helpers/axiosHelper";
-import { setAdminUser } from "./adminUserSlice";
+import { setAdminUser, setAllAdminUser } from "./adminUserSlice";
 
 export const loginUserAction = (data) => async (dispatch) => {
   const resultPromise = loginAdminUser(data);
@@ -40,6 +42,13 @@ export const getAdminUserAction = (token) => async (dispatch) => {
   const { status, user } = await getAdminUser(token);
 
   status === "success" && dispatch(setAdminUser(user));
+};
+
+// fetch all user and mount in the redux store
+export const getAllAdminUserAction = () => async (dispatch) => {
+  const { status, users } = await getAllAdminUser();
+
+  status === "success" && dispatch(setAllAdminUser(users));
 };
 
 // AUTO-LOGIN
@@ -78,4 +87,14 @@ export const updateAdminUserPasswordAction = async (data) => {
 
   const { status, message } = await promisePending;
   toast[status](message);
+};
+
+// delete admin user
+export const deleteAdminUserAction = (_id) => async (dispatch) => {
+  const promisePending = deleteAdminUser(_id);
+  toast.promise(promisePending, { pending: "Please wait...!" });
+
+  const { status, message } = await promisePending;
+  toast[status](message);
+  status === "success" && dispatch(getAllAdminUserAction());
 };

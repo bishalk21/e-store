@@ -30,11 +30,11 @@ export const OrderTable = () => {
           {orders.map((item, i) => (
             <tr key={i}>
               <td>{i + 1}</td>
-              <td>{item.status}</td>
+              <td>{item?.status}</td>
               <td>
                 {item?.buyer?.firstName} {item?.buyer?.lastName}
               </td>
-              <td>{item.totalAmount}</td>
+              <td>{item?.totalAmount}</td>
               <td>{item?.paymentInfo?.status}</td>
               <td>
                 <Link to={`/orders/${item?._id}`}>

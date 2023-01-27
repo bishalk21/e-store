@@ -9,19 +9,19 @@ export const OrderEditForm = () => {
   const dispatch = useDispatch();
   const { _id } = useParams();
   const { orders, selectedOrder } = useSelector((state) => state.orders);
-  const { cart } = selectedOrder;
 
   useEffect(() => {
     // check if we have orders in our state, if so select the order from the state
     if (orders.length) {
-      const selectOrder = orders.filter((item) => item._id === _id);
-      dispatch(setSelectedOrders(selectOrder));
+      const select = orders.filter((item) => item._id === _id)[0];
+      dispatch(setSelectedOrders(select));
     } else {
       // otherwise fetch from the server
       dispatch(getSingleOrdersAction(_id));
     }
   }, [dispatch, orders, _id]);
 
+  const { cart } = selectedOrder;
   return (
     <>
       {/* status */}
@@ -41,21 +41,22 @@ export const OrderEditForm = () => {
         </div>
       </div>
 
-      {/* buyer info */}
+      {/* buyer? info */}
       <div className="shipingInfo card p-2 mt-3">
         <h4>Shipping Details</h4>
         <hr />
         <p>
           Order Date: <br />
-          Name: {selectedOrder?.buyer.firstName} {selectedOrder?.buyer.lastName}
+          Name: {selectedOrder?.buyer?.firstName}{" "}
+          {selectedOrder?.buyer?.lastName}
           <br />
-          Phone: {selectedOrder?.buyer.phone}
+          Phone: {selectedOrder?.buyer?.phone}
           <br />
-          Email: {selectedOrder?.buyer.email}
+          Email: {selectedOrder?.buyer?.email}
           <br />
-          Shipping Address: {selectedOrder?.shipping.street},{" "}
-          {selectedOrder?.shipping.suburb}, {selectedOrder?.shipping.postcode}{" "}
-          {selectedOrder?.shipping.state}
+          Shipping Address: {selectedOrder?.shipping?.street},{" "}
+          {selectedOrder?.shipping?.suburb}, {selectedOrder?.shipping?.postcode}{" "}
+          {selectedOrder?.shipping?.state}
           <br />
         </p>
       </div>
@@ -65,15 +66,15 @@ export const OrderEditForm = () => {
         <h4>Payment Info</h4>
         <hr />
         <p>
-          Status: {selectedOrder?.paymentInfo.status}
+          Status: {selectedOrder?.paymentInfo?.status}
           <br />
-          Total Paid: {selectedOrder?.paymentInfo.paidAmount}
+          Total Paid: {selectedOrder?.paymentInfo?.paidAmount}
           <br />
-          Paid Date: {selectedOrder?.paymentInfo.paidDate}
+          Paid Date: {selectedOrder?.paymentInfo?.paidDate}
           <br />
-          Method: {selectedOrder?.paymentInfo.method}
+          Method: {selectedOrder?.paymentInfo?.method}
           <br />
-          Transaction ID: {selectedOrder?.paymentInfo.transactionId}
+          Transaction ID: {selectedOrder?.paymentInfo?.transactionId}
           <br />
         </p>
       </div>
@@ -92,7 +93,7 @@ export const OrderEditForm = () => {
             <th>Sub Total</th>
           </thead>
           <tbody>
-            {cart.map((item, i) => (
+            {cart?.map((item, i) => (
               <tr key={i}>
                 <td>{i + 1}</td>
                 <td>

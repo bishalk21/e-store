@@ -62,6 +62,15 @@ export const SideMenu = () => {
               <Link onClick={handleClose} to="/settings" className="nav-link">
                 <i class="fa-solid fa-cog"></i> Settings
               </Link>
+              <ListGroup.Item>
+                <Link
+                  onClick={handleClose}
+                  to="/admin-users"
+                  className="nav-link"
+                >
+                  <i class="fa-solid fa-user-secret"></i> Admin User
+                </Link>
+              </ListGroup.Item>
             </ListGroup.Item>
           </ListGroup>
         </Offcanvas.Body>

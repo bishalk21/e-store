@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { MainLayout } from "../../components/main-layout/MainLayout";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Alert } from "react-bootstrap";
+import { Alert, Container } from "react-bootstrap";
 import { CustomInputField } from "../../components/custom-input-field/customInputField";
 import { postNewAdminUser } from "../../helpers/axiosHelper";
+import { Link } from "react-router-dom";
 
 export const AdminRegistration = () => {
   const [form, setForm] = useState({});
@@ -91,20 +92,32 @@ export const AdminRegistration = () => {
   return (
     <>
       <MainLayout>
-        <div className="container">
-          <div className="form">
-            <Form onSubmit={handleOnSubmit}>
-              <h1>New Admin Registration</h1>
+        <Container>
+          <div className="mt-3">
+            <Link
+              to="/admin-users"
+              className="text-decoration-none text-secondary"
+            >
+              &lt; Back
+            </Link>
+          </div>
 
-              {response.message && (
-                <Alert
-                  variant={response.status === "success" ? "success" : "danger"}
-                >
-                  {response.message}
-                </Alert>
-              )}
+          <div className="container">
+            <div className="form">
+              <Form onSubmit={handleOnSubmit}>
+                <h1>New Admin Registration</h1>
 
-              {/* <Form.Group className="mb-3" controlId="formBasicEmail">
+                {response.message && (
+                  <Alert
+                    variant={
+                      response.status === "success" ? "success" : "danger"
+                    }
+                  >
+                    {response.message}
+                  </Alert>
+                )}
+
+                {/* <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control type="email" placeholder="Enter email" />
         <Form.Text className="text-muted">
@@ -120,22 +133,23 @@ export const AdminRegistration = () => {
 <CustomInputField  />
 <CustomInputField />
 <CustomInputField /> */}
-              {fields.map((field, index) => {
-                return (
-                  <CustomInputField
-                    key={index}
-                    {...field}
-                    onChange={handleOnChange}
-                  />
-                );
-              })}
+                {fields.map((field, index) => {
+                  return (
+                    <CustomInputField
+                      key={index}
+                      {...field}
+                      onChange={handleOnChange}
+                    />
+                  );
+                })}
 
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
+                <Button variant="primary" type="submit">
+                  Submit
+                </Button>
+              </Form>
+            </div>
           </div>
-        </div>
+        </Container>
       </MainLayout>
     </>
   );

@@ -104,12 +104,23 @@ export const getAdminUser = (data) => {
   return apiProcessor(option);
 };
 
+// get All admin user
+export const getAllAdminUser = () => {
+  const option = {
+    method: "get",
+    url: adminUserEp + "/all-admin",
+    isPrivate: true,
+  };
+  return apiProcessor(option);
+};
+
 // post new admin user
 export const postNewAdminUser = (data) => {
   const option = {
     method: "post",
     url: adminUserEp,
     data,
+    isPrivate: true,
   };
   return apiProcessor(option);
 };
@@ -172,6 +183,16 @@ export const resetAdminUserPassword = (data) => {
     method: "patch",
     url: adminUserEp + "/reset-password",
     data,
+  };
+  return apiProcessor(option);
+};
+
+// delete admin USER
+export const deleteAdminUser = (_id) => {
+  const option = {
+    method: "delete",
+    url: adminUserEp + "/" + _id,
+    isPrivate: true,
   };
   return apiProcessor(option);
 };

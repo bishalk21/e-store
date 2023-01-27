@@ -12,8 +12,8 @@ export const AdminDashboard = () => {
   const { productList } = useSelector((state) => state.products);
 
   useEffect(() => {
-    !productList.length && dispatch(getProductAction());
-  }, [productList, dispatch]);
+    dispatch(getProductAction());
+  }, [ dispatch]);
 
   // active products
   const activeProducts = productList.filter(

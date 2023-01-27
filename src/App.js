@@ -17,6 +17,7 @@ import { Orders } from "./pages/orders/Orders";
 import { OrderDetails } from "./pages/orders/OrderDetails";
 import { Reviews } from "./pages/reviews/Reviews";
 import { Users } from "./pages/users/Users";
+import { AdminUsers } from "./pages/admin-users/AdminUsers";
 
 function App() {
   return (
@@ -117,6 +118,15 @@ function App() {
             element={
               <PrivateRouter>
                 <Users />
+              </PrivateRouter>
+            }
+          />
+
+          <Route
+            path="/admin-users"
+            element={
+              <PrivateRouter>
+                <AdminUsers />
               </PrivateRouter>
             }
           />
