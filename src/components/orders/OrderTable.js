@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Table } from "react-bootstrap";
+import { Button, Form, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getOrdersAction } from "../../pages/orders/order-reducer-action/orderAction";
@@ -10,24 +10,56 @@ const productPerPage = 10;
 export const OrderTable = () => {
   const dispatch = useDispatch();
   const [active, setActive] = useState(1);
+  const [display, setDisplay] = useState([]);
 
   const { orders } = useSelector((state) => state.orders);
 
   useEffect(() => {
-    dispatch(getOrdersAction());
-  }, [dispatch]);
+    !orders.length && dispatch(getOrdersAction());
+    setDisplay(orders);
+  }, [dispatch, orders]);
 
   const handleOnPageClick = (num) => {
     setActive(num);
   };
 
-  const pages = Math.ceil(orders.length / productPerPage);
+  const handleOnStatusChange = (e) => {
+    const { value } = e.target;
+    setActive(1);
+
+    if (!value) {
+      return setDisplay(orders);
+    }
+
+    const filteredArg = orders.filter(
+      (item) => item.status.toLowerCase() === value.toLowerCase()
+    );
+    setDisplay(filteredArg);
+  };
+
+  // const pages = Math.ceil(orders.length / productPerPage);
+  const pages = Math.ceil(display.length / productPerPage);
 
   const productStartAt = productPerPage * (active - 1);
   const productEndAt = productStartAt + productPerPage;
 
   return (
     <>
+      <div className="d-flex justify-content-between py-2">
+        <div>{display.length} Found</div>
+        <div className="">
+          <Form>
+            <Form.Group>
+              <Form.Select onChange={handleOnStatusChange}>
+                <option value="">-- Filter --</option>
+                <option value="processing">Processing</option>
+                <option value="shipped">Shipped</option>
+                <option value="cancelled">Cancelled</option>
+              </Form.Select>
+            </Form.Group>
+          </Form>
+        </div>
+      </div>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -40,7 +72,8 @@ export const OrderTable = () => {
           </tr>
         </thead>
         <tbody>
-          {orders.map(
+          {/* {orders.map( */}
+          {display.map(
             (item, i) =>
               i >= productStartAt &&
               i < productEndAt && (
